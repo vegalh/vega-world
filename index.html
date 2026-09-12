@@ -4,2920 +4,2044 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Vega's Atlas</title>
-
-    <!-- MapLibre -->
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/maplibre-gl@6.8.0/dist/maplibre-gl.css"
-    >
-
-    <style>
-
-        /* ============================================================
-           BASE
-        ============================================================ */
-
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-
-            background:
-                #f4f0e7;
-
-            color:
-                #292b26;
-
-            font-family:
-                Georgia,
-                "Times New Roman",
-                serif;
-        }
-
-        button,
-        input,
-        textarea {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-
-        /* ============================================================
-           HEADER
-        ============================================================ */
-
-        header {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            padding:
-                28px 6%;
-
-            border-bottom:
-                1px solid rgba(40, 40, 35, 0.16);
-
-            background:
-                rgba(244, 240, 231, 0.96);
-        }
-
-        .logo {
-
-            font-size:
-                17px;
-
-            letter-spacing:
-                0.16em;
-
-            text-transform:
-                uppercase;
-        }
-
-        nav {
-
-            display: flex;
-
-            gap:
-                28px;
-        }
-
-        nav button {
-
-            background:
-                none;
-
-            border:
-                none;
-
-            color:
-                #575a52;
-
-            font-size:
-                12px;
-
-            letter-spacing:
-                0.13em;
-
-            text-transform:
-                uppercase;
-        }
-
-
-        /* ============================================================
-           HOME PAGE
-        ============================================================ */
-
-        #homePage {
-
-            min-height:
-                100vh;
-        }
-
-
-        .hero {
-
-            text-align:
-                center;
-
-            padding:
-                80px 20px 45px;
-        }
-
-        .eyebrow {
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size:
-                10px;
-
-            letter-spacing:
-                0.28em;
-
-            text-transform:
-                uppercase;
-
-            color:
-                #85877d;
-
-            margin-bottom:
-                24px;
-        }
-
-
-        .hero h1 {
-
-            font-size:
-                clamp(48px, 8vw, 105px);
-
-            line-height:
-                0.95;
-
-            font-weight:
-                normal;
-
-            margin:
-                0;
-
-            letter-spacing:
-                -0.045em;
-        }
-
-
-        .hero h1 em {
-
-            font-weight:
-                normal;
-
-            color:
-                #737a68;
-        }
-
-
-        .heroText {
-
-            max-width:
-                520px;
-
-            margin:
-                28px auto 0;
-
-            color:
-                #6d6e67;
-
-            font-size:
-                15px;
-
-            line-height:
-                1.8;
-        }
-
-
-        /* ============================================================
-           MAP
-        ============================================================ */
-
-        .mapOuter {
-
-            width:
-                90%;
-
-            max-width:
-                1350px;
-
-            margin:
-                20px auto 0;
-
-            position:
-                relative;
-        }
-
-
-        #map {
-
-            width:
-                100%;
-
-            height:
-                620px;
-
-            border:
-                1px solid rgba(60, 60, 50, 0.18);
-
-            background:
-                #dfe4df;
-        }
-
-
-        .mapCaption {
-
-            display:
-                flex;
-
-            justify-content:
-                space-between;
-
-            gap:
-                30px;
-
-            padding:
-                16px 0;
-
-            color:
-                #7c7c74;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size:
-                10px;
-
-            letter-spacing:
-                0.1em;
-
-            text-transform:
-                uppercase;
-        }
-
-
-        /* ============================================================
-           MAP MARKERS
-        ============================================================ */
-
-        .city-marker {
-
-            width:
-                14px;
-
-            height:
-                14px;
-
-            border-radius:
-                50%;
-
-            border:
-                2px solid #f4f0e7;
-
-            background:
-                #515b4b;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,.18);
-
-            transition:
-                0.25s;
-        }
-
-
-        .city-marker:hover {
-
-            transform:
-                scale(1.5);
-
-            background:
-                #272d25;
-        }
-
-
-        .photo-marker {
-
-            width:
-                56px;
-
-            height:
-                56px;
-
-            border-radius:
-                50%;
-
-            border:
-                3px solid #f4f0e7;
-
-            background-size:
-                cover;
-
-            background-position:
-                center;
-
-            box-shadow:
-                0 4px 14px rgba(0,0,0,.20);
-
-            transition:
-                transform 0.25s;
-        }
-
-
-        .photo-marker:hover {
-
-            transform:
-                scale(1.12);
-        }
-
-
-        /* ============================================================
-           HOME STATS
-        ============================================================ */
-
-        .stats {
-
-            width:
-                88%;
-
-            max-width:
-                900px;
-
-            margin:
-                70px auto;
-
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            border-top:
-                1px solid #c8c5bb;
-
-            border-bottom:
-                1px solid #c8c5bb;
-        }
-
-
-        .stat {
-
-            text-align:
-                center;
-
-            padding:
-                34px 10px;
-        }
-
-
-        .stat + .stat {
-
-            border-left:
-                1px solid #c8c5bb;
-        }
-
-
-        .statNumber {
-
-            font-size:
-                36px;
-
-            margin-bottom:
-                8px;
-        }
-
-
-        .statLabel {
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            text-transform:
-                uppercase;
-
-            letter-spacing:
-                .16em;
-
-            font-size:
-                9px;
-
-            color:
-                #85867f;
-        }
-
-
-        /* ============================================================
-           JOURNAL SECTION
-        ============================================================ */
-
-        .journalSection {
-
-            width:
-                88%;
-
-            max-width:
-                1150px;
-
-            margin:
-                120px auto;
-        }
-
-
-        .sectionHeader {
-
-            display:
-                flex;
-
-            justify-content:
-                space-between;
-
-            align-items:
-                end;
-
-            margin-bottom:
-                42px;
-        }
-
-
-        .sectionHeader h2 {
-
-            font-size:
-                clamp(36px, 5vw, 65px);
-
-            font-weight:
-                normal;
-
-            margin:
-                0;
-        }
-
-
-        .sectionHeader p {
-
-            max-width:
-                320px;
-
-            color:
-                #797a73;
-
-            line-height:
-                1.6;
-
-            font-size:
-                13px;
-        }
-
-
-        #recentMemories {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                repeat(2, 1fr);
-
-            gap:
-                55px;
-        }
-
-
-        .memoryCard {
-
-            cursor:
-                pointer;
-        }
-
-
-        .memoryImage {
-
-            width:
-                100%;
-
-            aspect-ratio:
-                4 / 3;
-
-            object-fit:
-                cover;
-
-            background:
-                #ddd8cc;
-        }
-
-
-        .memoryCity {
-
-            margin-top:
-                18px;
-
-            font-size:
-                24px;
-        }
-
-
-        .memoryDate {
-
-            margin-top:
-                7px;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size:
-                9px;
-
-            letter-spacing:
-                .14em;
-
-            text-transform:
-                uppercase;
-
-            color:
-                #8a8b84;
-        }
-
-
-        .memoryExcerpt {
-
-            color:
-                #686961;
-
-            line-height:
-                1.7;
-
-            font-size:
-                14px;
-
-            max-width:
-                430px;
-        }
-
-
-        /* ============================================================
-           CITY PAGE
-        ============================================================ */
-
-        #cityPage {
-
-            display:
-                none;
-
-            min-height:
-                100vh;
-        }
-
-
-        .cityTop {
-
-            width:
-                88%;
-
-            max-width:
-                1050px;
-
-            margin:
-                auto;
-
-            padding:
-                50px 0 100px;
-        }
-
-
-        .backButton {
-
-            border:
-                none;
-
-            background:
-                none;
-
-            padding:
-                0;
-
-            margin-bottom:
-                80px;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size:
-                10px;
-
-            letter-spacing:
-                .16em;
-
-            text-transform:
-                uppercase;
-
-            color:
-                #696b64;
-        }
-
-
-        .cityMeta {
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size:
-                10px;
-
-            letter-spacing:
-                .18em;
-
-            text-transform:
-                uppercase;
-
-            color:
-                #898a82;
-        }
-
-
-        #cityTitle {
-
-            font-size:
-                clamp(65px, 12vw, 145px);
-
-            font-weight:
-                normal;
-
-            line-height:
-                .9;
-
-            letter-spacing:
-                -.055em;
-
-            margin:
-                18px 0 28px;
-        }
-
-
-        .cityCoordinates {
-
-            color:
-                #7d7e76;
-
-            font-size:
-                12px;
-        }
-
-
-        /* ============================================================
-           CITY HERO PHOTO
-        ============================================================ */
-
-        .cityHero {
-
-            margin-top:
-                65px;
-
-            width:
-                100%;
-
-            max-height:
-                680px;
-
-            object-fit:
-                cover;
-
-            display:
-                none;
-        }
-
-
-        /* ============================================================
-           CITY WRITING
-        ============================================================ */
-
-        .cityWriting {
-
-            max-width:
-                680px;
-
-            margin:
-                90px auto;
-        }
-
-
-        .cityWriting h2 {
-
-            font-size:
-                42px;
-
-            font-weight:
-                normal;
-
-            font-style:
-                italic;
-
-            line-height:
-                1.2;
-        }
-
-
-        #cityDescription {
-
-            font-size:
-                18px;
-
-            line-height:
-                2;
-
-            white-space:
-                pre-wrap;
-
-            color:
-                #44463f;
-        }
-
-
-        /* ============================================================
-           PHOTO GALLERY
-        ============================================================ */
-
-        #gallery {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap:
-                20px;
-
-            margin:
-                100px 0;
-        }
-
-
-        #gallery img {
-
-            width:
-                100%;
-
-            object-fit:
-                cover;
-        }
-
-
-        #gallery img:nth-child(3n + 1) {
-
-            grid-column:
-                span 2;
-        }
-
-
-        /* ============================================================
-           ADD MEMORY
-        ============================================================ */
-
-        .addMemoryArea {
-
-            max-width:
-                680px;
-
-            margin:
-                100px auto;
-
-            border-top:
-                1px solid #c6c3b9;
-
-            padding-top:
-                60px;
-        }
-
-
-        .addMemoryArea h3 {
-
-            font-size:
-                32px;
-
-            font-weight:
-                normal;
-        }
-
-
-        .field {
-
-            margin:
-                30px 0;
-        }
-
-
-        .field label {
-
-            display:
-                block;
-
-            margin-bottom:
-                10px;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            text-transform:
-                uppercase;
-
-            letter-spacing:
-                .13em;
-
-            font-size:
-                9px;
-
-            color:
-                #777971;
-        }
-
-
-        input[type="text"],
-        input[type="date"],
-        textarea {
-
-            width:
-                100%;
-
-            border:
-                none;
-
-            border-bottom:
-                1px solid #aaa89e;
-
-            background:
-                transparent;
-
-            padding:
-                12px 2px;
-
-            outline:
-                none;
-
-            color:
-                #30312d;
-        }
-
-
-        textarea {
-
-            border:
-                1px solid #aaa89e;
-
-            padding:
-                16px;
-
-            resize:
-                vertical;
-
-            min-height:
-                170px;
-
-            line-height:
-                1.7;
-        }
-
-
-        input:focus,
-        textarea:focus {
-
-            border-color:
-                #4f574a;
-        }
-
-
-        .fileInput {
-
-            padding:
-                20px;
-
-            border:
-                1px dashed #aaa89e;
-
-            width:
-                100%;
-        }
-
-
-        .saveButton {
-
-            margin-top:
-                20px;
-
-            border:
-                1px solid #4c5148;
-
-            background:
-                #4c5148;
-
-            color:
-                #f5f1e8;
-
-            padding:
-                14px 28px;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            text-transform:
-                uppercase;
-
-            letter-spacing:
-                .14em;
-
-            font-size:
-                10px;
-        }
-
-
-        /* ============================================================
-           ADD CITY
-        ============================================================ */
-
-        .addCitySection {
-
-            width:
-                88%;
-
-            max-width:
-                700px;
-
-            margin:
-                120px auto;
-
-            padding:
-                70px 0;
-
-            border-top:
-                1px solid #c7c3b8;
-        }
-
-
-        .addCitySection h2 {
-
-            font-size:
-                44px;
-
-            font-weight:
-                normal;
-
-            margin-bottom:
-                10px;
-        }
-
-
-        .addCitySection > p {
-
-            color:
-                #777970;
-
-            line-height:
-                1.7;
-        }
-
-
-        /* ============================================================
-           EMPTY PHOTO
-        ============================================================ */
-
-        .emptyMemory {
-
-            padding:
-                70px 0;
-
-            color:
-                #81827a;
-
-            font-style:
-                italic;
-        }
-
-
-        /* ============================================================
-           FOOTER
-        ============================================================ */
-
-        footer {
-
-            border-top:
-                1px solid #c8c5bb;
-
-            padding:
-                35px 6%;
-
-            display:
-                flex;
-
-            justify-content:
-                space-between;
-
-            font-family:
-                Arial,
-                sans-serif;
-
-            font-size:
-                9px;
-
-            letter-spacing:
-                .13em;
-
-            text-transform:
-                uppercase;
-
-            color:
-                #86877f;
-        }
-
-
-        /* ============================================================
-           MOBILE
-        ============================================================ */
-
-        @media (max-width: 700px) {
-
-            header {
-
-                padding:
-                    22px 5%;
-            }
-
-
-            nav {
-
-                gap:
-                    10px;
-            }
-
-
-            nav button {
-
-                font-size:
-                    9px;
-            }
-
-
-            .hero {
-
-                padding-top:
-                    60px;
-            }
-
-
-            #map {
-
-                height:
-                    500px;
-            }
-
-
-            .mapOuter {
-
-                width:
-                    94%;
-            }
-
-
-            .mapCaption {
-
-                display:
-                    block;
-
-                line-height:
-                    1.8;
-            }
-
-
-            .stats {
-
-                width:
-                    94%;
-            }
-
-
-            .statNumber {
-
-                font-size:
-                    27px;
-            }
-
-
-            #recentMemories {
-
-                grid-template-columns:
-                    1fr;
-            }
-
-
-            .sectionHeader {
-
-                display:
-                    block;
-            }
-
-
-            #gallery {
-
-                grid-template-columns:
-                    1fr;
-            }
-
-
-            #gallery img:nth-child(3n + 1) {
-
-                grid-column:
-                    auto;
-            }
-
-
-            footer {
-
-                display:
-                    block;
-
-                line-height:
-                    2;
-            }
-
-        }
-
-    </style>
-
+    <title>我们的世界1.0</title>
 </head>
 
+<body bgcolor="#F2EBDD" text="#31372F" link="#566A55" vlink="#566A55">
 
+<!-- =========================================================
+     GLOBAL NAVIGATION
+========================================================= -->
 
-<body>
+<table width="100%" cellpadding="18">
+    <tr>
+        <td width="17%" valign="top">
 
+            <h1>我们的世界</h1>
+            <p><i>一个关于我们想做的事情的小地图</i></p>
 
-<!-- ============================================================
-     HEADER
-============================================================ -->
+            <hr>
 
-<header>
+            <p><a href="#home">⌂ Map</a></p>
+            <p><a href="#movies">▣ Movie Room</a></p>
+            <p><a href="#studio">♬ Studio Woods</a></p>
+            <p><a href="#tables">♨ Little Tables</a></p>
+            <p><a href="#night">☾ After Dark</a></p>
+            <p><a href="#road">↝ Day Trip Road</a></p>
+            <p><a href="#travel">✈ Far Away</a></p>
+            <p><a href="#dreams">✦ Someday</a></p>
 
-    <div class="logo">
-        Vega's Atlas
-    </div>
+            <hr>
 
-    <nav>
+            <small>
+                Everything you add is saved<br>
+                in this browser.
+            </small>
 
-        <button onclick="showHome()">
-            The World
-        </button>
+        </td>
 
-        <button onclick="scrollToJournal()">
-            Journal
-        </button>
+        <td width="83%" valign="top">
 
-        <button onclick="scrollToAddCity()">
-            Add a Place
-        </button>
 
-    </nav>
+<!-- =========================================================
+     HOME MAP
+========================================================= -->
 
-</header>
+<section id="home">
 
+<center>
 
+<br>
 
-<!-- ============================================================
-     HOME
-============================================================ -->
+<p>✦　　·　　✦　　·　　✦</p>
 
-<div id="homePage">
+<h1>WHERE SHOULD WE GO?</h1>
 
+<p>
+<i>
+not everything needs to happen today
+</i>
+</p>
 
-    <section class="hero">
+<br><br>
 
-        <div class="eyebrow">
-            A personal geography
-        </div>
+<table width="90%" cellpadding="25" cellspacing="10">
 
-        <h1>
-            the places<br>
-            <em>I've carried</em><br>
-            with me.
-        </h1>
+<tr>
 
-        <p class="heroText">
+<td align="center" bgcolor="#DDE4D4">
 
-            A map of places I have passed through,
-            stayed in, loved, misunderstood,
-            returned to — and remembered.
+<h2>♬</h2>
 
-        </p>
+<h3>STUDIO WOODS</h3>
 
-    </section>
+<p>
+paint<br>
+music<br>
+photography<br>
+things we make from each other
+</p>
 
+<p>
+<a href="#studio">
+wander in →
+</a>
+</p>
 
+</td>
 
-    <!-- MAP -->
 
-    <section class="mapOuter">
+<td align="center" bgcolor="#D8D1C2">
 
-        <div id="map"></div>
+<h2>▣</h2>
 
-        <div class="mapCaption">
+<h3>MOVIE ROOM</h3>
 
-            <span>
-                Drag to wander · scroll to zoom · click a place to remember
-            </span>
+<p>
+two hours<br>
+old televisions<br>
+films we haven't seen yet
+</p>
 
-            <span>
-                My world, slowly collected.
-            </span>
+<p>
+<a href="#movies">
+turn on the televisions →
+</a>
+</p>
 
-        </div>
+</td>
 
-    </section>
 
+<td align="center" bgcolor="#D9DFE7">
 
+<h2>✈</h2>
 
-    <!-- STATS -->
+<h3>FAR AWAY</h3>
 
-    <section class="stats">
+<p>
+weekends<br>
+America<br>
+somewhere very far away
+</p>
 
-        <div class="stat">
+<p>
+<a href="#travel">
+open the map →
+</a>
+</p>
 
-            <div
-                class="statNumber"
-                id="cityCount"
-            >
-                0
-            </div>
+</td>
 
-            <div class="statLabel">
-                Places
-            </div>
+</tr>
 
-        </div>
 
+<tr>
 
-        <div class="stat">
+<td align="center" bgcolor="#E8D9C5">
 
-            <div
-                class="statNumber"
-                id="memoryCount"
-            >
-                0
-            </div>
+<h2>♨</h2>
 
-            <div class="statLabel">
-                Memories
-            </div>
+<h3>LITTLE TABLES</h3>
 
-        </div>
+<p>
+restaurants<br>
+dessert<br>
+places worth returning to
+</p>
 
+<p>
+<a href="#tables">
+find a table →
+</a>
+</p>
 
-        <div class="stat">
+</td>
 
-            <div
-                class="statNumber"
-                id="photoCount"
-            >
-                0
-            </div>
 
-            <div class="statLabel">
-                Photographs
-            </div>
+<td align="center" bgcolor="#C8CED8">
 
-        </div>
+<h2>☾</h2>
 
-    </section>
+<h3>AFTER DARK</h3>
 
+<p>
+bars<br>
+music<br>
+city lights<br>
+late nights
+</p>
 
+<p>
+<a href="#night">
+stay out →
+</a>
+</p>
 
-    <!-- JOURNAL -->
+</td>
 
-    <section
-        class="journalSection"
-        id="journalSection"
-    >
 
-        <div class="sectionHeader">
+<td align="center" bgcolor="#DED8C8">
 
-            <h2>
-                Recently remembered
-            </h2>
+<h2>↝</h2>
 
-            <p>
-                Not necessarily the places I visited most recently.
-                Just the ones that have been returning to me.
-            </p>
+<h3>DAY TRIP ROAD</h3>
 
-        </div>
+<p>
+2 hours<br>
+half a day<br>
+a whole day<br>
+a weekend
+</p>
 
+<p>
+<a href="#road">
+take the road →
+</a>
+</p>
 
-        <div id="recentMemories"></div>
+</td>
 
-    </section>
+</tr>
 
 
+<tr>
 
-    <!-- ADD CITY -->
+<td></td>
 
-    <section
-        class="addCitySection"
-        id="addCitySection"
-    >
+<td align="center" bgcolor="#252C3A">
 
-        <div class="eyebrow">
-            Somewhere new
-        </div>
+<font color="#F2E8C8">
 
-        <h2>
-            Add a place to the map.
-        </h2>
+<h2>✦</h2>
 
-        <p>
-            Add the city and its coordinates.
-            It will become part of your atlas immediately.
-        </p>
+<h3>SOMEDAY</h3>
 
+<p>
+things that don't need<br>
+a plan yet
+</p>
 
-        <div class="field">
+<p>
+<a href="#dreams">
+<font color="#F2E8C8">
+look up →
+</font>
+</a>
+</p>
 
-            <label>
-                City
-            </label>
+</font>
 
-            <input
-                type="text"
-                id="newCityName"
-                placeholder="Reykjavík"
-            >
+</td>
 
-        </div>
+<td></td>
 
+</tr>
 
-        <div class="field">
+</table>
 
-            <label>
-                Country
-            </label>
 
-            <input
-                type="text"
-                id="newCityCountry"
-                placeholder="Iceland"
-            >
+<br><br>
 
-        </div>
+<p>
+<i>
+home is somewhere in the middle of all of this.
+</i>
+</p>
 
+<br><br>
 
-        <div class="field">
+<hr>
 
-            <label>
-                Latitude
-            </label>
+</center>
 
-            <input
-                type="text"
-                id="newCityLat"
-                placeholder="64.1466"
-            >
+</section>
 
-        </div>
 
 
-        <div class="field">
+<!-- =========================================================
+     MOVIE ROOM
+========================================================= -->
 
-            <label>
-                Longitude
-            </label>
+<section id="movies">
 
-            <input
-                type="text"
-                id="newCityLng"
-                placeholder="-21.9426"
-            >
+<br>
 
-        </div>
+<table width="100%" bgcolor="#242521" cellpadding="25">
 
+<tr>
 
-        <button
-            class="saveButton"
-            onclick="addCity()"
-        >
-            Add to my world
-        </button>
+<td>
 
-    </section>
+<font color="#EFE4CD">
 
+<h1>▣ THE MOVIE ROOM</h1>
 
-</div>
+<p>
+<i>
+About two hours.<br>
+Sometimes that's all we have.
+</i>
+</p>
 
+<hr>
 
+<table width="100%" cellpadding="15">
 
-<!-- ============================================================
-     CITY PAGE
-============================================================ -->
+<tr>
 
-<div id="cityPage">
+<!-- ADD MOVIE -->
 
-    <section class="cityTop">
+<td width="28%" valign="top">
 
+<fieldset>
 
-        <button
-            class="backButton"
-            onclick="showHome()"
-        >
-            ← The world
-        </button>
+<legend>
+<font color="#EFE4CD">
+ADD A MOVIE
+</font>
+</legend>
 
+<form id="movieForm">
 
-        <div
-            class="cityMeta"
-            id="cityCountry"
-        ></div>
+<p>
+Title<br>
+<input id="movieTitle" required>
+</p>
 
 
-        <h1 id="cityTitle"></h1>
+<p>
+Poster image URL<br>
+<input id="moviePoster">
+</p>
 
 
-        <div
-            class="cityCoordinates"
-            id="cityCoordinates"
-        ></div>
+<p>
+Runtime<br>
+<input
+id="movieRuntime"
+placeholder="1h 41m">
+</p>
 
 
-        <img
-            id="cityHeroImage"
-            class="cityHero"
-            alt=""
-        >
+<p>
+When do we want to watch it?<br>
+<input
+id="moviePlanDate"
+type="date">
+</p>
 
 
+<p>
+When did we actually watch it?<br>
+<input
+id="movieWatchedDate"
+type="date">
+</p>
 
-        <section class="cityWriting">
 
-            <h2 id="cityMemoryTitle">
-                What I remember.
-            </h2>
+<p>
+Status<br>
 
-            <div id="cityDescription"></div>
+<select id="movieStatus">
 
-        </section>
+<option>
+Want to Watch
+</option>
 
+<option>
+Watched
+</option>
 
+<option>
+Favorite
+</option>
 
-        <section id="gallery"></section>
+</select>
 
+</p>
 
 
-        <!-- ADD MEMORY -->
+<p>
+Vega ♥<br>
 
-        <section class="addMemoryArea">
+<select id="movieVega">
 
-            <div class="eyebrow">
-                Add to this place
-            </div>
+<option>—</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
 
-            <h3>
-                A new memory
-            </h3>
+</select>
 
+</p>
 
-            <div class="field">
 
-                <label>
-                    Date
-                </label>
+<p>
+His ♥<br>
 
-                <input
-                    type="date"
-                    id="memoryDate"
-                >
+<select id="movieHim">
 
-            </div>
+<option>—</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
 
+</select>
 
-            <div class="field">
+</p>
 
-                <label>
-                    A small title
-                </label>
 
-                <input
-                    type="text"
-                    id="memoryTitle"
-                    placeholder="Somewhere between rain and sunlight"
-                >
+<p>
+Why did we save this?<br>
 
-            </div>
+<textarea
+id="movieNote"
+rows="4"
+cols="25">
+</textarea>
 
+</p>
 
-            <div class="field">
 
-                <label>
-                    What do you remember?
-                </label>
+<input
+id="movieEditing"
+type="hidden">
 
-                <textarea
-                    id="memoryText"
-                    placeholder="Write as much or as little as you want..."
-                ></textarea>
 
-            </div>
+<button type="submit">
+PUT IT ON TV
+</button>
 
+</form>
 
-            <div class="field">
+</fieldset>
 
-                <label>
-                    Photographs
-                </label>
+</td>
 
-                <input
-                    class="fileInput"
-                    type="file"
-                    id="memoryPhotos"
-                    accept="image/*"
-                    multiple
-                >
 
-            </div>
+<!-- TV WALL -->
 
+<td valign="top">
 
-            <button
-                class="saveButton"
-                onclick="saveMemory()"
-            >
-                Keep this memory
-            </button>
+<div id="movieWall"></div>
 
-        </section>
+</td>
 
+</tr>
 
-    </section>
+</table>
 
-</div>
+</font>
 
+</td>
 
+</tr>
 
-<!-- ============================================================
-     FOOTER
-============================================================ -->
+</table>
 
-<footer>
+<p>
+<a href="#home">
+← back to the map
+</a>
+</p>
 
-    <span>
-        Vega's Atlas
-    </span>
+<hr>
 
-    <span>
-        A life, mapped in places.
-    </span>
+</section>
 
-</footer>
 
 
+<!-- =========================================================
+     STUDIO
+========================================================= -->
 
-<!-- ============================================================
+<section id="studio">
+
+<br>
+
+<center>
+
+<h1>♬ STUDIO WOODS</h1>
+
+<p>
+<i>
+two people making completely different things
+at the same table.
+</i>
+</p>
+
+</center>
+
+
+<table width="100%" cellpadding="20" cellspacing="10">
+
+<tr>
+
+<td bgcolor="#E3DED0" valign="top">
+
+<h2>🎨 PAINT</h2>
+
+<p>
+<i>
+paper on the table
+</i>
+</p>
+
+<div id="paintList"></div>
+
+<p>
+
+<input
+id="paintInput"
+placeholder="something to paint">
+
+<button onclick="addItem('paint')">
+leave it on the desk
+</button>
+
+</p>
+
+</td>
+
+
+<td bgcolor="#D8D8CE" valign="top">
+
+<h2>♫ MUSIC</h2>
+
+<p>
+<i>
+things he wants to make or play
+</i>
+</p>
+
+<div id="musicList"></div>
+
+<p>
+
+<input
+id="musicInput"
+placeholder="song / idea / sound">
+
+<button onclick="addItem('music')">
+leave a cassette
+</button>
+
+</p>
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td bgcolor="#D4D8D0" valign="top">
+
+<h2>▣ PHOTOGRAPHY</h2>
+
+<p>
+<i>
+places, concepts, photographs we haven't taken yet
+</i>
+</p>
+
+<div id="photoList"></div>
+
+<p>
+
+<input
+id="photoInput"
+placeholder="photo idea">
+
+<button onclick="addItem('photo')">
+add contact sheet
+</button>
+
+</p>
+
+</td>
+
+
+<td bgcolor="#E0D7CB" valign="top">
+
+<h2>↝ CROSSOVER</h2>
+
+<p>
+<i>
+something begins with one of us
+and ends with the other.
+</i>
+</p>
+
+<div id="crossList"></div>
+
+<p>
+
+<input
+id="crossInput"
+placeholder="his music → my painting">
+
+<button onclick="addItem('cross')">
+start something
+</button>
+
+</p>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<p>
+<a href="#home">
+← back to the map
+</a>
+</p>
+
+<hr>
+
+</section>
+
+
+
+<!-- =========================================================
+     LITTLE TABLES
+========================================================= -->
+
+<section id="tables">
+
+<br>
+
+<h1>♨ LITTLE TABLES</h1>
+
+<p>
+<i>
+Receipts, menus, matchbooks,
+and places we keep saying we should try.
+</i>
+</p>
+
+
+<table width="100%" cellpadding="20">
+
+<tr>
+
+<td width="50%" valign="top">
+
+<fieldset>
+
+<legend>
+RESTAURANTS
+</legend>
+
+<div id="restaurantList"></div>
+
+<p>
+
+<input
+id="restaurantInput"
+placeholder="restaurant · neighborhood">
+
+<button onclick="addItem('restaurant')">
+save receipt
+</button>
+
+</p>
+
+</fieldset>
+
+</td>
+
+
+<td valign="top">
+
+<fieldset>
+
+<legend>
+DESSERT / CAFÉ
+</legend>
+
+<div id="dessertList"></div>
+
+<p>
+
+<input
+id="dessertInput"
+placeholder="place · what we want">
+
+<button onclick="addItem('dessert')">
+save napkin
+</button>
+
+</p>
+
+</fieldset>
+
+</td>
+
+</tr>
+
+</table>
+
+
+
+<h2>Places We've Loved</h2>
+
+<div id="favoriteFoodList"></div>
+
+<p>
+
+<input
+id="favoriteFoodInput"
+placeholder="somewhere worth returning">
+
+<button onclick="addItem('favoriteFood')">
+keep it
+</button>
+
+</p>
+
+
+<p>
+<a href="#home">
+← back to the map
+</a>
+</p>
+
+<hr>
+
+</section>
+
+
+
+<!-- =========================================================
+     AFTER DARK
+========================================================= -->
+
+<section id="night">
+
+<table width="100%"
+bgcolor="#1E2632"
+cellpadding="35">
+
+<tr>
+
+<td>
+
+<font color="#EEE4CA">
+
+<p>
+·　　　✦　　　　·　　　☾
+</p>
+
+<h1>
+AFTER DARK
+</h1>
+
+<p>
+<i>
+drinks · live music · city lights ·
+nowhere we have to rush back from
+</i>
+</p>
+
+
+<br>
+
+
+<h2>
+BARS
+</h2>
+
+<div id="barList"></div>
+
+<p>
+
+<input
+id="barInput"
+placeholder="somewhere for a drink">
+
+<button onclick="addItem('bar')">
+save matchbook
+</button>
+
+</p>
+
+
+<br>
+
+
+<h2>
+LIVE MUSIC
+</h2>
+
+<div id="liveMusicList"></div>
+
+<p>
+
+<input
+id="liveMusicInput"
+placeholder="jazz / concert / strange little venue">
+
+<button onclick="addItem('liveMusic')">
+save ticket
+</button>
+
+</p>
+
+
+<br>
+
+
+<h2>
+NIGHT IDEAS
+</h2>
+
+<div id="nightIdeaList"></div>
+
+<p>
+
+<input
+id="nightIdeaInput"
+placeholder="drive somewhere / walk / rooftop">
+
+<button onclick="addItem('nightIdea')">
+keep for later
+</button>
+
+</p>
+
+
+<p>
+✦　　　·　　　　☾　　　　·
+</p>
+
+</font>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<p>
+<a href="#home">
+← back to the map
+</a>
+</p>
+
+<hr>
+
+</section>
+
+
+
+<!-- =========================================================
+     DAY TRIP ROAD
+========================================================= -->
+
+<section id="road">
+
+<br>
+
+<center>
+
+<h1>↝ DAY TRIP ROAD</h1>
+
+<p>
+<i>
+How much time do we actually have?
+</i>
+</p>
+
+</center>
+
+
+<table width="100%" cellpadding="22" cellspacing="8">
+
+<tr>
+
+<td bgcolor="#E4DDD0">
+
+<h2>
+2 HOURS
+</h2>
+
+<p>
+<i>
+an ordinary evening
+</i>
+</p>
+
+<div id="twoHourList"></div>
+
+<p>
+
+<input id="twoHourInput">
+
+<button onclick="addItem('twoHour')">
++
+</button>
+
+</p>
+
+</td>
+
+
+<td bgcolor="#DDD9CB">
+
+<h2>
+HALF DAY
+</h2>
+
+<p>
+<i>
+when work ends early
+</i>
+</p>
+
+<div id="halfDayList"></div>
+
+<p>
+
+<input id="halfDayInput">
+
+<button onclick="addItem('halfDay')">
++
+</button>
+
+</p>
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td bgcolor="#D5D9CC">
+
+<h2>
+FULL DAY
+</h2>
+
+<p>
+<i>
+a whole day that belongs to us
+</i>
+</p>
+
+<div id="fullDayList"></div>
+
+<p>
+
+<input id="fullDayInput">
+
+<button onclick="addItem('fullDay')">
++
+</button>
+
+</p>
+
+</td>
+
+
+<td bgcolor="#CED5D5">
+
+<h2>
+WEEKEND+
+</h2>
+
+<p>
+<i>
+pack something
+</i>
+</p>
+
+<div id="weekendList"></div>
+
+<p>
+
+<input id="weekendInput">
+
+<button onclick="addItem('weekend')">
++
+</button>
+
+</p>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<center>
+
+<p>
+HOME
+</p>
+
+<p>
+↓
+</p>
+
+<p>
+two hours
+</p>
+
+<p>
+↓
+</p>
+
+<p>
+half a day
+</p>
+
+<p>
+↓
+</p>
+
+<p>
+a whole day
+</p>
+
+<p>
+↓
+</p>
+
+<p>
+somewhere else
+</p>
+
+</center>
+
+
+<p>
+<a href="#home">
+← back to the map
+</a>
+</p>
+
+<hr>
+
+</section>
+
+
+
+<!-- =========================================================
+     TRAVEL
+========================================================= -->
+
+<section id="travel">
+
+<br>
+
+<center>
+
+<h1>✈ FAR AWAY</h1>
+
+<p>
+<i>
+only places we put on the map exist here.
+</i>
+</p>
+
+
+<br>
+
+
+<h2>
+OUR VERY IMPRECISE MAP
+</h2>
+
+
+<pre>
+
+                ✦
+
+        ○
+
+                   ~ ~ ~ ~ ~ ~ ~ ~ ~
+
+ HOME ★ ------------------------------------ ○
+
+              ~ ~ ~ ~ ~ ~ ~
+
+                                   ✈
+
+                       ○
+
+          ☆
+
+</pre>
+
+</center>
+
+
+<table width="100%"
+cellpadding="20"
+cellspacing="8">
+
+<tr>
+
+<td bgcolor="#DDE1D8"
+valign="top">
+
+<h2>
+US
+</h2>
+
+<div id="usList"></div>
+
+<p>
+
+<input
+id="usInput"
+placeholder="place · season">
+
+<button onclick="addItem('us')">
+drop pin
+</button>
+
+</p>
+
+</td>
+
+
+<td bgcolor="#D7DEE0"
+valign="top">
+
+<h2>
+INTERNATIONAL
+</h2>
+
+<div id="internationalList"></div>
+
+<p>
+
+<input
+id="internationalInput"
+placeholder="country / city">
+
+<button onclick="addItem('international')">
+drop pin
+</button>
+
+</p>
+
+</td>
+
+
+<td bgcolor="#E0D9C8"
+valign="top">
+
+<h2>
+BEEN THERE ★
+</h2>
+
+<div id="beenList"></div>
+
+<p>
+
+<input
+id="beenInput"
+placeholder="place · year">
+
+<button onclick="addItem('been')">
+stamp passport
+</button>
+
+</p>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<p>
+<a href="#home">
+← back to the map
+</a>
+</p>
+
+<hr>
+
+</section>
+
+
+
+<!-- =========================================================
+     SOMEDAY
+========================================================= -->
+
+<section id="dreams">
+
+<table
+width="100%"
+bgcolor="#202839"
+cellpadding="50">
+
+<tr>
+
+<td align="center">
+
+<font color="#F4EBCF">
+
+<p>
+·　　　　✦　　　　　　·
+</p>
+
+<p>
+　　　　☆　　　　·
+</p>
+
+<h1>
+SOMEDAY
+</h1>
+
+<p>
+<i>
+no deadline.<br>
+no category.<br>
+no need to be realistic.
+</i>
+</p>
+
+
+<br>
+
+
+<div id="dreamList"></div>
+
+
+<br>
+
+
+<input
+id="dreamInput"
+size="60"
+placeholder="write a star into the sky">
+
+<button onclick="addItem('dream')">
+✦
+</button>
+
+
+<br><br>
+
+
+<p>
+✦　　　　　　·
+</p>
+
+<p>
+　　　☆　　　　　　　·
+</p>
+
+<p>
+　　　　　　　✦
+</p>
+
+</font>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<p>
+<a href="#home">
+← back to the map
+</a>
+</p>
+
+</section>
+
+
+</td>
+</tr>
+</table>
+
+
+
+<!-- =========================================================
      JAVASCRIPT
-============================================================ -->
+========================================================= -->
 
-<script type="module">
+<script>
 
-import * as maplibregl
-from "https://unpkg.com/maplibre-gl@6.8.0/dist/maplibre-gl.mjs";
+const STORAGE_KEY = "oursLittleAtlas";
 
-
-/* ============================================================
-   STARTER PLACES
-
-   Delete any you don't want.
-============================================================ */
-
-const starterCities = [
-
-    {
-        id: "beijing",
-        name: "Beijing",
-        country: "China",
-        lat: 39.9042,
-        lng: 116.4074
-    },
-
-    {
-        id: "boston",
-        name: "Boston",
-        country: "United States",
-        lat: 42.3601,
-        lng: -71.0589
-    },
-
-    {
-        id: "paris",
-        name: "Paris",
-        country: "France",
-        lat: 48.8566,
-        lng: 2.3522
-    },
-
-    {
-        id: "dublin",
-        name: "Dublin",
-        country: "Ireland",
-        lat: 53.3498,
-        lng: -6.2603
-    },
-
-    {
-        id: "edinburgh",
-        name: "Edinburgh",
-        country: "Scotland",
-        lat: 55.9533,
-        lng: -3.1883
-    },
-
-    {
-        id: "vienna",
-        name: "Vienna",
-        country: "Austria",
-        lat: 48.2082,
-        lng: 16.3738
-    },
-
-    {
-        id: "budapest",
-        name: "Budapest",
-        country: "Hungary",
-        lat: 47.4979,
-        lng: 19.0402
-    }
-
-];
-
-
-
-/* ============================================================
-   LOAD DATA
-============================================================ */
-
-let cities =
-    JSON.parse(
-        localStorage.getItem("atlasCities")
-    )
-    ||
-    starterCities;
-
-
-let memories =
-    JSON.parse(
-        localStorage.getItem("atlasMemories")
-    )
-    ||
-    {};
-
-
-let currentCity = null;
-
-
-
-/* ============================================================
-   MAP
-============================================================ */
-
-const map =
-    new maplibregl.Map({
-
-        container:
-            "map",
-
-        style:
-            "https://demotiles.maplibre.org/globe.json",
-
-        center:
-            [15, 25],
-
-        zoom:
-            1.25,
-
-        attributionControl:
-            true
-
-    });
-
-
-
-map.addControl(
-
-    new maplibregl.NavigationControl({
-        showCompass: false
-    }),
-
-    "bottom-right"
-
+let data =
+JSON.parse(
+localStorage.getItem(STORAGE_KEY)
+||
+`
+{
+    "movies": [],
+    "lists": {}
+}
+`
 );
 
 
 
-/* ============================================================
-   CITY MARKERS
-============================================================ */
+function saveData() {
 
-let markerObjects = [];
-
-
-function renderMarkers() {
-
-    markerObjects.forEach(
-        marker => marker.remove()
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
     );
-
-
-    markerObjects = [];
-
-
-    cities.forEach(city => {
-
-
-        const cityMemories =
-            memories[city.id] || [];
-
-
-        const photos =
-            cityMemories.flatMap(
-                memory =>
-                    memory.photos || []
-            );
-
-
-        const marker =
-            document.createElement("button");
-
-
-        marker.type =
-            "button";
-
-
-        if (photos.length > 0) {
-
-            marker.className =
-                "photo-marker";
-
-            marker.style.backgroundImage =
-                `url("${photos[0]}")`;
-
-        }
-
-        else {
-
-            marker.className =
-                "city-marker";
-
-        }
-
-
-        marker.title =
-            city.name;
-
-
-        marker.setAttribute(
-            "aria-label",
-            "Open " + city.name
-        );
-
-
-        marker.addEventListener(
-            "click",
-            () => openCity(city.id)
-        );
-
-
-        const mapMarker =
-            new maplibregl.Marker({
-                element: marker
-            })
-
-            .setLngLat([
-                city.lng,
-                city.lat
-            ])
-
-            .addTo(map);
-
-
-        markerObjects.push(
-            mapMarker
-        );
-
-    });
 
 }
 
 
 
-map.on(
-    "load",
-    renderMarkers
-);
+/* =========================================================
+   SAFE TEXT
+========================================================= */
+
+function safe(text) {
+
+    return String(text || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;");
+
+}
 
 
 
-/* ============================================================
-   OPEN CITY
-============================================================ */
+/* =========================================================
+   HEART RATINGS
+========================================================= */
 
-window.openCity =
-function(cityId) {
+function hearts(number) {
 
-    const city =
-        cities.find(
-            city =>
-                city.id === cityId
-        );
+    if (!number || number === "—")
+        return "—";
 
-
-    if (!city) {
-        return;
-    }
-
-
-    currentCity =
-        city;
-
-
-    document
-        .getElementById("homePage")
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById("cityPage")
-        .style.display =
-        "block";
-
-
-    document
-        .getElementById("cityCountry")
-        .textContent =
-        city.country;
-
-
-    document
-        .getElementById("cityTitle")
-        .textContent =
-        city.name;
-
-
-    document
-        .getElementById("cityCoordinates")
-        .textContent =
-
-        formatCoordinate(
-            city.lat,
-            "N",
-            "S"
-        )
-
-        +
-
-        "  ·  "
-
-        +
-
-        formatCoordinate(
-            city.lng,
-            "E",
-            "W"
-        );
-
-
-    renderCityMemories();
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-
-};
-
-
-
-function formatCoordinate(
-    value,
-    positive,
-    negative
-) {
+    let rating = Number(number);
 
     return (
-        Math.abs(value).toFixed(4)
+        "♥".repeat(rating)
         +
-        "° "
-        +
-        (
-            value >= 0
-            ?
-            positive
-            :
-            negative
-        )
+        "♡".repeat(5-rating)
     );
 
 }
 
 
 
-/* ============================================================
-   CITY MEMORIES
-============================================================ */
+/* =========================================================
+   MOVIES
+========================================================= */
 
-function renderCityMemories() {
-
-    const cityMemories =
-        memories[currentCity.id]
-        ||
-        [];
+const movieForm =
+document.getElementById("movieForm");
 
 
-    const hero =
-        document.getElementById(
-            "cityHeroImage"
-        );
+movieForm.addEventListener(
+"submit",
+function(event) {
+
+    event.preventDefault();
 
 
-    const description =
-        document.getElementById(
-            "cityDescription"
-        );
+    let movie = {
+
+        title:
+        movieTitle.value,
+
+        poster:
+        moviePoster.value,
+
+        runtime:
+        movieRuntime.value,
+
+        planDate:
+        moviePlanDate.value,
+
+        watchedDate:
+        movieWatchedDate.value,
+
+        status:
+        movieStatus.value,
+
+        vega:
+        movieVega.value,
+
+        him:
+        movieHim.value,
+
+        note:
+        movieNote.value
+
+    };
 
 
-    const title =
-        document.getElementById(
-            "cityMemoryTitle"
-        );
+    let editing =
+    movieEditing.value;
 
 
-    const gallery =
-        document.getElementById(
-            "gallery"
-        );
+    if (editing === "") {
 
-
-    gallery.innerHTML =
-        "";
-
-
-    if (
-        cityMemories.length === 0
-    ) {
-
-        hero.style.display =
-            "none";
-
-
-        title.textContent =
-            "Nothing written yet.";
-
-
-        description.innerHTML =
-
-            `<div class="emptyMemory">
-                Maybe you haven't found the words
-                for this place yet.
-             </div>`;
-
-
-        return;
-
-    }
-
-
-    const newest =
-        cityMemories[
-            cityMemories.length - 1
-        ];
-
-
-    title.textContent =
-        newest.title
-        ||
-        "What I remember.";
-
-
-    description.textContent =
-        newest.text
-        ||
-        "";
-
-
-    const allPhotos =
-        cityMemories.flatMap(
-            memory =>
-                memory.photos || []
-        );
-
-
-    if (allPhotos.length > 0) {
-
-        hero.src =
-            allPhotos[0];
-
-        hero.alt =
-            currentCity.name;
-
-        hero.style.display =
-            "block";
+        data.movies.push(movie);
 
     }
 
     else {
 
-        hero.style.display =
-            "none";
+        data.movies[
+            Number(editing)
+        ] = movie;
 
     }
 
 
-    allPhotos
-        .slice(1)
-        .forEach(photo => {
+    saveData();
 
-            const image =
-                document.createElement(
-                    "img"
-                );
+    movieForm.reset();
 
+    movieEditing.value = "";
 
-            image.src =
-                photo;
-
-
-            image.alt =
-                "Memory from "
-                +
-                currentCity.name;
-
-
-            gallery.appendChild(
-                image
-            );
-
-        });
+    renderMovies();
 
 }
+);
 
 
 
-/* ============================================================
-   SAVE MEMORY
-============================================================ */
+function renderMovies() {
 
-window.saveMemory =
-async function() {
-
-    if (!currentCity) {
-        return;
-    }
-
-
-    const date =
-        document
-            .getElementById(
-                "memoryDate"
-            )
-            .value;
-
-
-    const title =
-        document
-            .getElementById(
-                "memoryTitle"
-            )
-            .value
-            .trim();
-
-
-    const text =
-        document
-            .getElementById(
-                "memoryText"
-            )
-            .value
-            .trim();
-
-
-    const files =
-        Array.from(
-            document
-                .getElementById(
-                    "memoryPhotos"
-                )
-                .files
-        );
-
-
-    if (
-        !text
-        &&
-        !title
-        &&
-        files.length === 0
-    ) {
-
-        alert(
-            "Give this memory at least a few words or a photograph."
-        );
-
-        return;
-
-    }
-
-
-    const photos =
-        [];
-
-
-    for (
-        const file
-        of files
-    ) {
-
-        const data =
-            await readImage(file);
-
-
-        photos.push(
-            data
-        );
-
-    }
-
-
-    const memory = {
-
-        id:
-            Date.now(),
-
-        date:
-            date,
-
-        title:
-            title,
-
-        text:
-            text,
-
-        photos:
-            photos,
-
-        created:
-            new Date()
-                .toISOString()
-
-    };
-
-
-    if (
-        !memories[currentCity.id]
-    ) {
-
-        memories[currentCity.id] =
-            [];
-
-    }
-
-
-    memories[currentCity.id]
-        .push(memory);
-
-
-    try {
-
-        localStorage.setItem(
-            "atlasMemories",
-            JSON.stringify(memories)
-        );
-
-    }
-
-    catch(error) {
-
-        alert(
-            "Your browser storage is full. Large photographs can fill local storage quickly."
-        );
-
-        memories[currentCity.id]
-            .pop();
-
-        return;
-
-    }
-
-
-    clearMemoryForm();
-
-    renderCityMemories();
-
-    renderMarkers();
-
-    renderRecent();
-
-    updateStats();
-
-};
-
-
-
-function readImage(file) {
-
-    return new Promise(
-        (resolve, reject) => {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                event =>
-                    resolve(
-                        event.target.result
-                    );
-
-
-            reader.onerror =
-                reject;
-
-
-            reader.readAsDataURL(
-                file
-            );
-
-        }
-    );
-
-}
-
-
-
-function clearMemoryForm() {
-
-    document
-        .getElementById(
-            "memoryDate"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "memoryTitle"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "memoryText"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "memoryPhotos"
-        )
-        .value =
-        "";
-
-}
-
-
-
-/* ============================================================
-   ADD CITY
-============================================================ */
-
-window.addCity =
-function() {
-
-    const name =
-        document
-            .getElementById(
-                "newCityName"
-            )
-            .value
-            .trim();
-
-
-    const country =
-        document
-            .getElementById(
-                "newCityCountry"
-            )
-            .value
-            .trim();
-
-
-    const lat =
-        Number(
-            document
-                .getElementById(
-                    "newCityLat"
-                )
-                .value
-        );
-
-
-    const lng =
-        Number(
-            document
-                .getElementById(
-                    "newCityLng"
-                )
-                .value
-        );
-
-
-    if (
-        !name
-        ||
-        !country
-        ||
-        Number.isNaN(lat)
-        ||
-        Number.isNaN(lng)
-        ||
-        lat < -90
-        ||
-        lat > 90
-        ||
-        lng < -180
-        ||
-        lng > 180
-    ) {
-
-        alert(
-            "Please enter a city, country, and valid latitude/longitude."
-        );
-
-        return;
-
-    }
-
-
-    const city = {
-
-        id:
-            name
-                .toLowerCase()
-                .replace(
-                    /[^a-z0-9]+/g,
-                    "-"
-                )
-            +
-            "-"
-            +
-            Date.now(),
-
-        name:
-            name,
-
-        country:
-            country,
-
-        lat:
-            lat,
-
-        lng:
-            lng
-
-    };
-
-
-    cities.push(city);
-
-
-    localStorage.setItem(
-        "atlasCities",
-        JSON.stringify(cities)
+    const wall =
+    document.getElementById(
+        "movieWall"
     );
 
 
-    renderMarkers();
-
-    updateStats();
-
-
-    map.flyTo({
-
-        center:
-            [
-                lng,
-                lat
-            ],
-
-        zoom:
-            5,
-
-        duration:
-            2200
-
-    });
-
-
-    document
-        .getElementById(
-            "newCityName"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "newCityCountry"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "newCityLat"
-        )
-        .value =
-        "";
-
-
-    document
-        .getElementById(
-            "newCityLng"
-        )
-        .value =
-        "";
-
-};
-
-
-
-/* ============================================================
-   RECENT JOURNAL
-============================================================ */
-
-function renderRecent() {
-
-    const container =
-        document.getElementById(
-            "recentMemories"
-        );
-
-
-    container.innerHTML =
-        "";
-
-
-    let all =
-        [];
-
-
-    Object.keys(memories)
-        .forEach(cityId => {
-
-            const city =
-                cities.find(
-                    city =>
-                        city.id
-                        ===
-                        cityId
-                );
-
-
-            if (!city) {
-                return;
-            }
-
-
-            memories[cityId]
-                .forEach(memory => {
-
-                    all.push({
-
-                        city:
-                            city,
-
-                        memory:
-                            memory
-
-                    });
-
-                });
-
-        });
-
-
-    all.sort(
-        (a, b) =>
-            new Date(
-                b.memory.created
-            )
-            -
-            new Date(
-                a.memory.created
-            )
-    );
-
-
-    all =
-        all.slice(0, 4);
-
-
     if (
-        all.length === 0
+        data.movies.length === 0
     ) {
 
-        container.innerHTML =
+        wall.innerHTML =
+`
+<center>
 
-            `<p class="emptyMemory">
-                Your photographs and writing will
-                begin appearing here as you add them
-                to the map.
-             </p>`;
+<font color="#EFE4CD">
+
+<pre>
+
+      _______________________
+     /                       \\
+    /                         \\
+   |                           |
+   |        ·  ·  ·  ·         |
+   |                           |
+   |         NO SIGNAL         |
+   |                           |
+   |        ·  ·  ·  ·         |
+   |                           |
+    \\                         /
+     \\_______________________/
+
+          ○           ○
+
+</pre>
+
+<p>
+<i>
+The televisions are quiet.
+</i>
+</p>
+
+</font>
+
+</center>
+`;
 
         return;
 
     }
 
 
-    all.forEach(item => {
 
-        const card =
-            document.createElement(
-                "article"
-            );
-
-
-        card.className =
-            "memoryCard";
-
-
-        card.addEventListener(
-            "click",
-            () =>
-                openCity(
-                    item.city.id
-                )
-        );
+    let html =
+`
+<table
+width="100%"
+cellpadding="10"
+cellspacing="12">
+<tr>
+`;
 
 
-        const firstPhoto =
-            item.memory.photos
-            &&
-            item.memory.photos[0];
 
-
-        if (firstPhoto) {
-
-            const image =
-                document.createElement(
-                    "img"
-                );
-
-
-            image.className =
-                "memoryImage";
-
-
-            image.src =
-                firstPhoto;
-
-
-            image.alt =
-                item.city.name;
-
-
-            card.appendChild(
-                image
-            );
-
-        }
-
-
-        const city =
-            document.createElement(
-                "div"
-            );
-
-
-        city.className =
-            "memoryCity";
-
-
-        city.textContent =
-            item.city.name
-            +
-            ", "
-            +
-            item.city.country;
-
-
-        card.appendChild(
-            city
-        );
+    data.movies.forEach(
+    function(movie,index) {
 
 
         if (
-            item.memory.date
+            index > 0
+            &&
+            index % 2 === 0
         ) {
 
-            const date =
-                document.createElement(
-                    "div"
-                );
-
-
-            date.className =
-                "memoryDate";
-
-
-            date.textContent =
-                formatDate(
-                    item.memory.date
-                );
-
-
-            card.appendChild(
-                date
-            );
+            html +=
+            "</tr><tr>";
 
         }
 
 
-        const excerpt =
-            document.createElement(
-                "p"
-            );
+        html +=
+`
+<td
+width="50%"
+valign="top">
+
+<table
+width="100%"
+bgcolor="#554C43"
+cellpadding="12">
+
+<tr>
+
+<td align="center">
+
+<font color="#F4E8CF">
+
+<b>
+${safe(movie.title)}
+</b>
+
+<br><br>
+`;
 
 
-        excerpt.className =
-            "memoryExcerpt";
+        if (movie.poster) {
 
+            html +=
+`
+<img
+src="${safe(movie.poster)}"
+width="190"
+height="270"
+alt="${safe(movie.title)} poster">
+`;
 
-        excerpt.textContent =
-            item.memory.text
-                .slice(0, 180)
-            +
-            (
-                item.memory.text.length
-                >
-                180
-                ?
-                "…"
-                :
-                ""
-            );
-
-
-        card.appendChild(
-            excerpt
-        );
-
-
-        container.appendChild(
-            card
-        );
-
-    });
-
-}
-
-
-
-function formatDate(dateString) {
-
-    const parts =
-        dateString
-            .split("-")
-            .map(Number);
-
-
-    const date =
-        new Date(
-            parts[0],
-            parts[1] - 1,
-            parts[2]
-        );
-
-
-    return date.toLocaleDateString(
-        "en-US",
-        {
-            month:
-                "long",
-
-            day:
-                "numeric",
-
-            year:
-                "numeric"
         }
+
+        else {
+
+            html +=
+`
+<table
+width="190"
+height="250"
+border="1">
+
+<tr>
+
+<td align="center">
+
+<font color="#F4E8CF">
+
+· · · · ·<br><br>
+
+NO POSTER
+
+<br><br>· · · · ·
+
+</font>
+
+</td>
+
+</tr>
+
+</table>
+`;
+
+        }
+
+
+
+        html +=
+`
+
+<br><br>
+
+${safe(movie.runtime)}
+
+<br>
+
+${safe(movie.status)}
+
+<br><br>
+
+Vega
+${hearts(movie.vega)}
+
+<br>
+
+Him
+${hearts(movie.him)}
+
+<br><br>
+`;
+
+
+        if (movie.planDate) {
+
+            html +=
+`
+Want to watch:
+${safe(movie.planDate)}
+
+<br>
+`;
+
+        }
+
+
+        if (movie.watchedDate) {
+
+            html +=
+`
+Watched:
+${safe(movie.watchedDate)}
+
+<br>
+`;
+
+        }
+
+
+        if (movie.note) {
+
+            html +=
+`
+<br>
+
+<i>
+"${safe(movie.note)}"
+</i>
+
+<br>
+`;
+
+        }
+
+
+        html +=
+`
+
+<br>
+
+<button
+onclick="editMovie(${index})">
+
+edit
+
+</button>
+
+
+<button
+onclick="deleteMovie(${index})">
+
+eject
+
+</button>
+
+
+</font>
+
+</td>
+
+</tr>
+
+</table>
+
+</td>
+`;
+
+    }
     );
+
+
+    html +=
+`
+</tr>
+</table>
+`;
+
+
+    wall.innerHTML = html;
 
 }
 
 
 
-/* ============================================================
-   STATS
-============================================================ */
+function editMovie(index) {
 
-function updateStats() {
-
-    let memoryCount =
-        0;
+    let movie =
+    data.movies[index];
 
 
-    let photoCount =
-        0;
+    movieTitle.value =
+    movie.title;
+
+    moviePoster.value =
+    movie.poster;
+
+    movieRuntime.value =
+    movie.runtime;
+
+    moviePlanDate.value =
+    movie.planDate;
+
+    movieWatchedDate.value =
+    movie.watchedDate;
+
+    movieStatus.value =
+    movie.status;
+
+    movieVega.value =
+    movie.vega;
+
+    movieHim.value =
+    movie.him;
+
+    movieNote.value =
+    movie.note;
+
+    movieEditing.value =
+    index;
 
 
-    Object.values(memories)
-        .forEach(cityMemories => {
-
-            memoryCount +=
-                cityMemories.length;
+    location.hash =
+    "movies";
 
 
-            cityMemories
-                .forEach(memory => {
-
-                    photoCount +=
-                        (
-                            memory.photos
-                            ||
-                            []
-                        ).length;
-
-                });
-
-        });
-
-
-    document
-        .getElementById(
-            "cityCount"
-        )
-        .textContent =
-        cities.length;
-
-
-    document
-        .getElementById(
-            "memoryCount"
-        )
-        .textContent =
-        memoryCount;
-
-
-    document
-        .getElementById(
-            "photoCount"
-        )
-        .textContent =
-        photoCount;
+    movieTitle.focus();
 
 }
 
 
 
-/* ============================================================
-   NAVIGATION
-============================================================ */
+function deleteMovie(index) {
 
-window.showHome =
-function() {
-
-    document
-        .getElementById(
-            "cityPage"
-        )
-        .style.display =
-        "none";
-
-
-    document
-        .getElementById(
-            "homePage"
-        )
-        .style.display =
-        "block";
-
-
-    currentCity =
-        null;
-
-
-    setTimeout(
-        () =>
-            map.resize(),
-        50
+    let yes =
+    confirm(
+        "Eject this movie?"
     );
 
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+    if (!yes)
+        return;
+
+
+    data.movies.splice(
+        index,
+        1
+    );
+
+
+    saveData();
+
+    renderMovies();
+
+}
+
+
+
+/* =========================================================
+   GENERAL LISTS
+========================================================= */
+
+const listTypes = [
+
+    "paint",
+    "music",
+    "photo",
+    "cross",
+
+    "restaurant",
+    "dessert",
+    "favoriteFood",
+
+    "bar",
+    "liveMusic",
+    "nightIdea",
+
+    "twoHour",
+    "halfDay",
+    "fullDay",
+    "weekend",
+
+    "us",
+    "international",
+    "been",
+
+    "dream"
+
+];
+
+
+
+function addItem(type) {
+
+    let input =
+    document.getElementById(
+        type + "Input"
+    );
+
+
+    let text =
+    input.value.trim();
+
+
+    if (!text)
+        return;
+
+
+    if (!data.lists[type]) {
+
+        data.lists[type] = [];
+
+    }
+
+
+    data.lists[type].push({
+
+        text: text,
+
+        done: false
+
     });
 
-};
+
+    input.value = "";
+
+
+    saveData();
+
+    renderList(type);
+
+}
 
 
 
-window.scrollToJournal =
-function() {
+function renderList(type) {
 
-    showHome();
-
-
-    setTimeout(
-        () => {
-
-            document
-                .getElementById(
-                    "journalSection"
-                )
-                .scrollIntoView({
-                    behavior:
-                        "smooth"
-                });
-
-        },
-        100
+    let container =
+    document.getElementById(
+        type + "List"
     );
 
-};
+
+    if (!container)
+        return;
 
 
+    if (!data.lists[type]) {
 
-window.scrollToAddCity =
-function() {
+        data.lists[type] = [];
 
-    showHome();
+    }
 
 
-    setTimeout(
-        () => {
+    let list =
+    data.lists[type];
 
-            document
-                .getElementById(
-                    "addCitySection"
-                )
-                .scrollIntoView({
-                    behavior:
-                        "smooth"
-                });
 
-        },
-        100
+    if (list.length === 0) {
+
+        container.innerHTML =
+        "<p><i>nothing here yet.</i></p>";
+
+        return;
+
+    }
+
+
+    let html = "";
+
+
+    list.forEach(
+    function(item,index) {
+
+
+        let marker =
+        item.done
+        ? "✓"
+        : "○";
+
+
+        html +=
+`
+<p>
+
+${marker}
+
+${safe(item.text)}
+
+&nbsp;
+
+<button
+onclick="
+toggleItem(
+'${type}',
+${index}
+)
+">
+
+${item.done ? "undo" : "done"}
+
+</button>
+
+
+<button
+onclick="
+editItem(
+'${type}',
+${index}
+)
+">
+
+edit
+
+</button>
+
+
+<button
+onclick="
+deleteItem(
+'${type}',
+${index}
+)
+">
+
+×
+
+</button>
+
+</p>
+`;
+
+    }
     );
 
-};
+
+    container.innerHTML =
+    html;
+
+}
 
 
 
-/* ============================================================
-   INITIAL RENDER
-============================================================ */
+function toggleItem(
+type,
+index
+) {
 
-renderRecent();
+    data.lists[type][index].done =
+    !data.lists[type][index].done;
 
-updateStats();
+
+    saveData();
+
+    renderList(type);
+
+}
+
+
+
+function editItem(
+type,
+index
+) {
+
+    let oldText =
+    data.lists[type][index].text;
+
+
+    let newText =
+    prompt(
+        "Edit this:",
+        oldText
+    );
+
+
+    if (
+        newText === null
+        ||
+        newText.trim() === ""
+    )
+        return;
+
+
+    data.lists[type][index].text =
+    newText.trim();
+
+
+    saveData();
+
+    renderList(type);
+
+}
+
+
+
+function deleteItem(
+type,
+index
+) {
+
+    data.lists[type].splice(
+        index,
+        1
+    );
+
+
+    saveData();
+
+    renderList(type);
+
+}
+
+
+
+/* =========================================================
+   START
+========================================================= */
+
+listTypes.forEach(
+function(type) {
+
+    renderList(type);
+
+}
+);
+
+
+renderMovies();
 
 </script>
 
 
 </body>
-
 </html>
