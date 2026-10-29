@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js world-loading">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Workshop — Vega Guo</title>
+  <meta name="description" content="Projects by Vega Guo: RootMap, Truvit, Peninsula Montessori Lessons, Lesson Prep Planner and Cookie Bytes by Julia.">
+  <meta name="theme-color" content="#17110e">
+  <meta property="og:title" content="The Workshop — Vega Guo">
+  <meta property="og:description" content="Projects by Vega Guo: RootMap, Truvit, Peninsula Montessori Lessons, Lesson Prep Planner and Cookie Bytes by Julia.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232e2238'/%3E%3Crect x='12' y='7' width='8' height='17' rx='1' fill='%23e8d3a0'/%3E%3Cpath d='M0 25h32v7H0z' fill='%236c5b8e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Outfit:wght@200;250;300;400&display=swap">
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/worlds.css">
+  <link rel="stylesheet" href="assets/css/workshop.css">
+  <script>
+    // mark JS early; arriving from the Atlas, the world opens out of its light
+    (function (d) {
+      d.className = d.className.replace("no-js", "js");
+      try {
+        var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (sessionStorage.getItem("vg-scene") && !calm) d.classList.add("from-world");
+        sessionStorage.removeItem("vg-scene");
+      } catch (e) {}
+      // if the room never appears, its list of contents is the page
+      setTimeout(function () {
+        if (!d.classList.contains("stage-ready")) d.classList.add("no-webgl");
+        d.classList.remove("from-world");
+      }, 8000);
+    })(document.documentElement);
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+  <script type="module" src="assets/js/workshop.js"></script>
+</head>
+
+<body class="world world-workshop" data-theme="night" data-world-index="2">
+  <a class="skip-link" href="#rail">Skip to the projects</a>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="mark" href="index.html"><span class="mark-dot" aria-hidden="true"></span>Vega Guo</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul class="nav-list">
+        <li><a class="nav-link" href="atlas.html">Atlas</a></li>
+        <li><a class="nav-link" href="work.html">Work</a></li>
+        <li><a class="nav-link" href="about.html">About</a></li>
+        <li><a class="nav-link" href="notes.html">Notes</a></li>
+        <li><a class="nav-link" href="sketchbook.html">Sketchbook</a></li>
+        <li><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- the room, built in assets/js/workshop.js -->
+  <canvas class="stage" aria-hidden="true"></canvas>
+  <div class="stage-vignette" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main id="main" class="world-main">
+    <section class="world-title" aria-labelledby="world-name">
+      <p class="eyebrow scene-index">World 03</p>
+      <h1 class="display" id="world-name">The Workshop</h1>
+      <p class="world-lede">Where things get built. Each object in the room is a project.</p>
+    </section>
+
+    <div class="world-empty" hidden></div>
+
+    <!-- every project in the room, as a list: filled from assets/data/projects.json -->
+    <nav class="world-rail" id="rail" aria-label="Projects"></nav>
+
+    <div class="world-bar">
+      <a class="world-back" href="atlas.html"><span aria-hidden="true">&larr;</span> The Atlas</a>
+      <p class="world-hint" aria-hidden="true"><span class="hint-mouse">Pick up an object &middot; click to open its project</span><span class="hint-touch">Tap an object &middot; drag to look around</span></p>
+    </div>
+
+    <noscript><p class="world-noscript">This world needs JavaScript. <a href="atlas.html">Return to the Atlas</a></p></noscript>
+  </main>
+
+  <div class="world-portal" aria-hidden="true"></div>
+</body>
+</html>

@@ -25,6 +25,9 @@
 
   const pad = (n) => String(n).padStart(2, "0");
 
+  // the Atlas faces this world when you go back to it
+  try { sessionStorage.setItem("vg-atlas", body.dataset.worldIndex || "3"); } catch (e) {}
+
   let photos = [];
   let collections = new Map();
   let items = [];          // every photograph's element, in file order

@@ -1,0 +1,17 @@
+/* ============================================================
+   THE WORKSHOP — lamplight, wood, and amber
+============================================================ */
+
+.world-workshop {
+  --w-bg: #17110e;
+  --w-ink: #f6ece1;
+  --w-soft: #cdbba8;
+  --w-dim: #9a8774;
+  --w-rule: rgba(246, 236, 225, .2);
+  --w-accent: #eaa978;
+  --w-sheet: #1c1511;
+  --w-sheet-ink: #f6ece1;
+  --w-sheet-soft: #b8a693;
+  --w-sheet-rule: rgba(246, 236, 225, .14);
+  --w-shade: rgba(16, 10, 7, .62);
+}

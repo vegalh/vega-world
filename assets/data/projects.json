@@ -1,0 +1,79 @@
+{
+  "projects": [
+    {
+      "id": "rootmap",
+      "name": "RootMap",
+      "object": "computer",
+      "label": "Current focus",
+      "summary": "A calm, Montessori-inspired companion for parents of young children.",
+      "description": "A calm, Montessori-inspired companion for parents of young children. Each day it suggests a hands-on activity suited to your child’s age, and lets you save small moments that build into a record of how they grow. Available in English and 简体中文, on web and iOS.",
+      "images": [
+        { "src": "assets/img/work/rootmap.jpg", "width": 600, "height": 1612, "alt": "RootMap on a phone: the Today screen, with a welcome card and today’s inspiration, Matching Socks." }
+      ],
+      "links": [
+        { "label": "Try RootMap", "url": "https://vegalh.github.io/rootmapmvp/" },
+        { "label": "Code on GitHub", "url": "https://github.com/vegalh/RootMapMVP" }
+      ]
+    },
+    {
+      "id": "truvit",
+      "name": "Truvit",
+      "object": "book",
+      "year": "2023–2027",
+      "summary": "Helping organizations turn their content libraries into AI models for better operations and personalized training.",
+      "description": "Truvit helps businesses and education organizations convert their datasets and book/content libraries into AI models that improve operations and deliver personalized training.",
+      "images": [
+        { "src": "Truvitlogo.jpg", "width": 564, "height": 814, "alt": "The Truvit logo." },
+        { "src": "assets/img/prh-working.jpg", "width": 802, "height": 1100, "alt": "Vega working on Truvit." }
+      ],
+      "links": [
+        { "label": "Read about Truvit", "url": "truvit.html" }
+      ]
+    },
+    {
+      "id": "peninsula",
+      "name": "Peninsula Montessori Lessons",
+      "object": "prototype",
+      "label": "Mini Project 1",
+      "summary": "Searchable circle-time lesson plans for busy preschool teachers.",
+      "description": "A mobile-friendly site that helps busy preschool teachers search and filter circle-time lesson plans by each child’s interests, so personalized lessons take less prep time.",
+      "images": [
+        { "src": "assets/img/work/peninsula.jpg", "width": 600, "height": 1612, "alt": "Peninsula Montessori Lessons on a phone: lesson search with age, topic and area filters, and popular activities such as Cleaning Mirror." }
+      ],
+      "links": [
+        { "label": "Visit the lessons site", "url": "https://vegalh.github.io/peninsula-montessori-lessons-site/" },
+        { "label": "Code on GitHub", "url": "https://github.com/vegalh/peninsula-montessori-lessons-site" }
+      ]
+    },
+    {
+      "id": "planner",
+      "name": "Lesson Prep Planner",
+      "object": "prototype",
+      "label": "Mini Project 2",
+      "summary": "A planning tool for Montessori classroom teachers.",
+      "description": "A planning tool for Montessori classroom teachers: schedule practical-life activities onto dates, check off materials as they’re ready, and see how much prep time each day needs.",
+      "images": [
+        { "src": "assets/img/work/planner.jpg", "width": 600, "height": 1612, "alt": "Lesson Prep Planner on a phone: a form to schedule an activity, and an overview of prep time." }
+      ],
+      "links": [
+        { "label": "Try Lesson Prep Planner", "url": "https://vegalh.github.io/lesson-prep-planner/" },
+        { "label": "Code on GitHub", "url": "https://github.com/vegalh/lesson-prep-planner" }
+      ]
+    },
+    {
+      "id": "cookie",
+      "name": "Cookie Bytes by Julia",
+      "object": "book",
+      "label": "Collaboration",
+      "summary": "Julia Cook’s books, videos and activities, brought together for parents and teachers.",
+      "description": "A platform that brings Julia Cook’s books, videos, and activities together, helping parents and teachers understand children’s behaviors and find simple ways to support them.",
+      "images": [
+        { "src": "assets/img/work/cookie.jpg", "width": 600, "height": 1612, "alt": "Cookie Bytes by Julia on a phone: “Real help for real moments,” with a search box and example topics such as Getting angry." }
+      ],
+      "links": [
+        { "label": "Visit Cookie Bytes", "url": "https://vegalh.github.io/juliacook/" },
+        { "label": "Code on GitHub", "url": "https://github.com/vegalh/juliacook" }
+      ]
+    }
+  ]
+}

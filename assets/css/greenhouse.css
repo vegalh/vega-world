@@ -1,0 +1,33 @@
+/* ============================================================
+   THE GREENHOUSE — golden-hour light, glass, leaves
+   The one bright world: dark ink on warm air.
+============================================================ */
+
+.world-greenhouse {
+  --w-bg: #e8d9b8;
+  --w-ink: #27261b;
+  --w-soft: #575440;
+  --w-dim: #7a7558;
+  --w-rule: rgba(39, 38, 27, .2);
+  --w-accent: #5f7a3c;
+  --w-sheet: #f7f0e1;
+  --w-sheet-ink: #26251b;
+  --w-sheet-soft: #6c6750;
+  --w-sheet-rule: rgba(38, 37, 27, .14);
+  --w-portal: #f2d79a;
+  --w-shade: rgba(240, 229, 205, .78);
+}
+.world-greenhouse .world-label { text-shadow: 0 1px 12px rgba(250, 242, 222, .9); }
+.world-greenhouse .detail-scrim { background: linear-gradient(90deg, rgba(60, 50, 20, .02), rgba(60, 50, 20, .22)); }
+
+/* the title sits on a patch of soft light so the ironwork doesn't cut through it */
+.world-greenhouse .stage-vignette {
+  background:
+    radial-gradient(38% 34% at 16% 26%, rgba(243, 233, 210, .9), transparent 72%),
+    linear-gradient(180deg, var(--w-shade) 0%, transparent 18%, transparent 70%, var(--w-shade) 100%);
+}
+@media (max-width: 760px) {
+  .world-greenhouse .stage-vignette {
+    background: linear-gradient(180deg, rgba(243, 233, 210, .94) 0%, rgba(243, 233, 210, .8) 24%, transparent 40%, transparent 72%, var(--w-shade) 100%);
+  }
+}

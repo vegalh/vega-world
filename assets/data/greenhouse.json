@@ -1,0 +1,44 @@
+{
+  "areas": [
+    {
+      "id": "rootmap",
+      "object": "tree",
+      "title": "RootMap",
+      "subtitle": "The tree at the centre",
+      "project": "rootmap",
+      "sections": [
+        { "id": "journey", "title": "Product development journey" },
+        { "id": "decisions", "title": "Design decisions" },
+        { "id": "milestones", "title": "Milestones", "timeline": [] }
+      ]
+    },
+    {
+      "id": "montessori",
+      "object": "shelf",
+      "title": "Montessori",
+      "subtitle": "Teaching and the classroom",
+      "intro": "Early childhood education is where my questions start: how to support children to reach their full potential. Montessori teacher training and time in the classroom with young children shape how I think about learning.",
+      "requireConsent": true,
+      "related": ["peninsula", "planner"],
+      "entries": [
+        { "id": "pitcher-paper-stars", "type": "Classroom observation", "status": "draft", "title": "A pitcher, paper stars, and twenty minutes of concentration" },
+        { "id": "camera-curiosity", "type": "Classroom observation", "status": "draft", "title": "A young child’s curiosity about a camera" },
+        { "id": "independence", "type": "Reflection", "status": "draft", "title": "What Montessori education taught me about independence" }
+      ]
+    },
+    {
+      "id": "learning",
+      "object": "table",
+      "title": "Ideas About Learning",
+      "subtitle": "Reflections and questions",
+      "intro": [
+        "Mostly, I want to understand how children learn, and how adults can become better guides.",
+        "I’m exploring how AI can create real, positive impact, especially in education. I believe technology should strengthen meaningful human interactions rather than replace them."
+      ],
+      "entries": [
+        { "id": "startups-learning", "type": "Essay", "status": "draft", "title": "What building startups taught me about learning" },
+        { "id": "ai-childhood", "type": "Essay", "status": "draft", "title": "On AI, childhood, and human connection" }
+      ]
+    }
+  ]
+}

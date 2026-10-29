@@ -1,0 +1,17 @@
+/* ============================================================
+   THE OBSERVATORY — night blue, starlight, brass
+============================================================ */
+
+.world-observatory {
+  --w-bg: #070912;
+  --w-ink: #eef1fb;
+  --w-soft: #aab4cf;
+  --w-dim: #7a849f;
+  --w-rule: rgba(238, 241, 251, .18);
+  --w-accent: #a9bde6;
+  --w-sheet: #0b0e19;
+  --w-sheet-ink: #eef1fb;
+  --w-sheet-soft: #9ba6c2;
+  --w-sheet-rule: rgba(238, 241, 251, .13);
+  --w-shade: rgba(5, 7, 14, .7);
+}

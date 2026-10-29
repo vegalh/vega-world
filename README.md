@@ -8,7 +8,11 @@ Vega Guo's personal website, published with GitHub Pages as plain static files. 
 | --- | --- |
 | Home: the Threshold, an interactive 3D scene | `index.html`, `assets/js/threshold.js`, `assets/css/home.css` |
 | The Atlas: a hall of five little worlds; the door leads here | `atlas.html`, `assets/js/atlas.js`, `assets/css/atlas.css` |
+| The Observatory: observations as stars | `observatory.html`, `assets/js/observatory.js`, `assets/data/observations.json` |
+| The Greenhouse: RootMap, Montessori, ideas about learning | `greenhouse.html`, `assets/js/greenhouse.js`, `assets/data/greenhouse.json` |
+| The Workshop: projects as objects | `workshop.html`, `assets/js/workshop.js`, `assets/data/projects.json` |
 | The Memory Room: photographs, driven by `assets/data/photos.json` | `memory.html`, `assets/js/memory.js`, `assets/css/memory.css` |
+| The Sketchbook: artwork in a book | `sketchbook-world.html`, `assets/js/sketchbook-world.js`, `assets/data/artworks.json` |
 | Work | `work.html` |
 | About | `about.html` |
 | Notes | `notes.html` |
@@ -16,7 +20,7 @@ Vega Guo's personal website, published with GitHub Pages as plain static files. 
 | Contact | `contact.html` |
 | Truvit (project page) | `truvit.html` (unchanged; uses `css/styles.css` and `css/truvit.css`) |
 
-**Adding photographs, and how the worlds are wired:** see [`docs/LITTLE-WORLDS.md`](docs/LITTLE-WORLDS.md).
+**How the worlds are wired, and how to add photographs, observations, projects, Greenhouse entries and artwork:** see [`docs/LITTLE-WORLDS.md`](docs/LITTLE-WORLDS.md).
 
 The shared styles and page transitions for the inner pages are in `assets/css/site.css` and `assets/js/site.js`.
 

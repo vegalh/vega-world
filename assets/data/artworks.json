@@ -1,0 +1,11 @@
+{
+  "collections": [
+    { "id": "watercolor", "title": "Watercolor" },
+    { "id": "painting", "title": "Painting" },
+    { "id": "sketches", "title": "Sketches" },
+    { "id": "digital", "title": "Digital Illustration" },
+    { "id": "characters", "title": "Character Design" },
+    { "id": "experiments", "title": "Visual Experiments" }
+  ],
+  "artworks": []
+}
