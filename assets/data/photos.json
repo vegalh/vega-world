@@ -1,0 +1,90 @@
+{
+  "collections": [
+    { "id": "facades", "title": "Façades & Halls", "description": "Buildings that made me stop and look up." },
+    { "id": "streets", "title": "Streets & Passages" },
+    { "id": "moments", "title": "Small Moments" }
+  ],
+  "photos": [
+    {
+      "id": "BL1",
+      "src": "pictures/BL1.jpg",
+      "thumb": "assets/img/photos/thumbs/BL1.jpg",
+      "width": 968, "height": 1290,
+      "alt": "Vega walking across a wide stone square beneath an ornate palace façade with a mansard roof, under a clear blue sky.",
+      "collection": "facades"
+    },
+    {
+      "id": "BLGJY",
+      "src": "pictures/BLGJY.jpg",
+      "thumb": "assets/img/photos/thumbs/BLGJY.jpg",
+      "width": 1280, "height": 1707,
+      "alt": "Vega in a white bucket hat at a carved balustrade inside a gilded hall of arches, chandeliers and a painted ceiling.",
+      "collection": "facades"
+    },
+    {
+      "id": "vega",
+      "src": "vega.jpg",
+      "thumb": "assets/img/photos/thumbs/vega.jpg",
+      "width": 1279, "height": 1706,
+      "alt": "Vega in a cap, holding a drink, looking across a crossing towards a domed stone building with columns and a clock.",
+      "collection": "facades",
+      "location": "Paris"
+    },
+    {
+      "id": "MZ1",
+      "src": "pictures/MZ1.jpg",
+      "thumb": "assets/img/photos/thumbs/MZ1.jpg",
+      "width": 960, "height": 1280,
+      "alt": "Vega in a long lilac dress leaning on an iron railing in front of the rounded stone apse of a large church.",
+      "collection": "facades"
+    },
+    {
+      "id": "MZ2",
+      "src": "pictures/MZ2.jpg",
+      "thumb": "assets/img/photos/thumbs/MZ2.jpg",
+      "width": 1280, "height": 1705,
+      "alt": "Vega in a lilac dress sitting on a green bench beneath a tall tree, between cream-coloured buildings and a street lamp.",
+      "collection": "streets"
+    },
+    {
+      "id": "JY1",
+      "src": "pictures/JY1.jpg",
+      "thumb": "assets/img/photos/thumbs/JY1.jpg",
+      "width": 1280, "height": 1707,
+      "alt": "Vega, carrying a penguin tote bag, studying a wall of pinned-up landscape images in a white room with a timber roof.",
+      "collection": "facades"
+    },
+    {
+      "id": "ZP1",
+      "src": "pictures/ZP1.jpg",
+      "thumb": "assets/img/photos/thumbs/ZP1.jpg",
+      "width": 1280, "height": 1707,
+      "alt": "A selfie of Vega in a cap and dark jacket on a sunny street lined with pale stone buildings.",
+      "collection": "streets"
+    },
+    {
+      "id": "YCH1",
+      "src": "pictures/YCH1.jpg",
+      "thumb": "assets/img/photos/thumbs/YCH1.jpg",
+      "width": 1500, "height": 1002,
+      "alt": "At night, Vega holds a fluffy blue plush toy up to her face in front of a dark iron gate.",
+      "collection": "moments"
+    },
+    {
+      "id": "ZP2",
+      "src": "pictures/ZP2.jpg",
+      "thumb": "assets/img/photos/thumbs/ZP2.jpg",
+      "width": 1280, "height": 1707,
+      "alt": "A selfie of Vega in a cap and face mask, sitting with her knees up in a bright waiting area with rows of seats.",
+      "collection": "streets"
+    },
+    {
+      "id": "TN1",
+      "src": "pictures/TN1.jpg",
+      "thumb": "assets/img/photos/thumbs/TN1.jpg",
+      "width": 1282, "height": 962,
+      "alt": "A young girl in a white dress and a small tiara sits on a pale studio backdrop, looking upwards.",
+      "collection": "moments"
+    }
+  ]
+}

@@ -6,13 +6,17 @@ Vega Guo's personal website, published with GitHub Pages as plain static files. 
 
 | Page | File |
 | --- | --- |
-| Home: an interactive 3D scene | `index.html`, `assets/js/threshold.js`, `assets/css/home.css` |
+| Home: the Threshold, an interactive 3D scene | `index.html`, `assets/js/threshold.js`, `assets/css/home.css` |
+| The Atlas: a hall of five little worlds; the door leads here | `atlas.html`, `assets/js/atlas.js`, `assets/css/atlas.css` |
+| The Memory Room: photographs, driven by `assets/data/photos.json` | `memory.html`, `assets/js/memory.js`, `assets/css/memory.css` |
 | Work | `work.html` |
 | About | `about.html` |
 | Notes | `notes.html` |
 | Sketchbook | `sketchbook.html` |
 | Contact | `contact.html` |
 | Truvit (project page) | `truvit.html` (unchanged; uses `css/styles.css` and `css/truvit.css`) |
+
+**Adding photographs, and how the worlds are wired:** see [`docs/LITTLE-WORLDS.md`](docs/LITTLE-WORLDS.md).
 
 The shared styles and page transitions for the inner pages are in `assets/css/site.css` and `assets/js/site.js`.
 
