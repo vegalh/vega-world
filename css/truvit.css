@@ -1,0 +1,41 @@
+.truvit-logo {
+    display: block;
+    width: 180px;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 28px;
+}
+
+.truvit-quote {
+    max-width: 520px;
+    margin-top: 26px;
+    font-style: normal;
+    line-height: 1.5;
+}
+
+.truvit-quote p {
+    margin: 0;
+}
+
+.truvit-hero .hero-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.truvit-hero .hero-image img {
+    width: 100%;
+    height: auto;
+    max-height: 590px;
+    object-fit: contain;
+}
+
+footer a {
+    color: #c96857;
+}
+
+@media (max-width: 750px) {
+    .truvit-hero {
+        gap: 32px;
+    }
+}

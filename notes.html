@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes — Vega Guo</title>
+  <meta name="description" content="Observations, stories, and thoughts from Vega Guo.">
+  <meta name="theme-color" content="#17121f">
+  <meta property="og:title" content="Notes — Vega Guo">
+  <meta property="og:description" content="Observations, stories, and thoughts from Vega Guo.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232e2238'/%3E%3Crect x='12' y='7' width='8' height='17' rx='1' fill='%23e8d3a0'/%3E%3Cpath d='M0 25h32v7H0z' fill='%236c5b8e'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Outfit:wght@200;250;300;400&display=swap">
+  <link rel="preload" href="assets/3d/threshold.glb" as="fetch" type="model/gltf-binary" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/inner.css">
+  <script>
+    // mark JS early; continue the transition we arrived through
+    (function (d) {
+      d.className = d.className.replace("no-js", "js");
+      try {
+        var calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (sessionStorage.getItem("vg-door") && !calm) d.classList.add("from-door");
+        else if (sessionStorage.getItem("vg-scene") && !calm) d.classList.add("is-arriving");
+        sessionStorage.removeItem("vg-door");
+        sessionStorage.removeItem("vg-scene");
+      } catch (e) {}
+    })(document.documentElement);
+  </script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="assets/js/site.js" defer></script>
+  <script type="module" src="assets/js/pages.js"></script>
+</head>
+
+<body class="inner notes" data-theme="night" data-world="notes">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="veil" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="mark" href="index.html"><span class="mark-dot" aria-hidden="true"></span>Vega Guo</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul class="nav-list">
+        <li><a class="nav-link" href="index.html">Home</a></li>
+        <li><a class="nav-link" href="work.html">Work</a></li>
+        <li><a class="nav-link" href="about.html">About</a></li>
+        <li><a class="nav-link" href="notes.html" aria-current="page">Notes</a></li>
+        <li><a class="nav-link" href="sketchbook.html">Sketchbook</a></li>
+        <li><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- the same lake as the homepage, seen from here -->
+  <canvas class="world" aria-hidden="true"></canvas>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <main id="main">
+    <section class="scene-open" data-vantage>
+      <div class="copy">
+        <p class="eyebrow scene-index">04 &mdash; Notes</p>
+        <h1 class="display">Notes</h1>
+        <p class="lede">Observations, stories, and things I&rsquo;m still thinking about.</p>
+      </div>
+    </section>
+
+    <section class="reading" data-vantage aria-label="Notes in progress">
+      <!-- When a note is ready, wrap its title in a link and change "In draft" to its date. -->
+      <ol class="notes">
+        <li class="note reveal">
+          <span class="note-num">01</span>
+          <h2 class="note-title">A pitcher, paper stars, and twenty minutes of concentration</h2>
+          <span class="note-state">In draft</span>
+        </li>
+        <li class="note reveal">
+          <span class="note-num">02</span>
+          <h2 class="note-title">A young child&rsquo;s curiosity about a camera</h2>
+          <span class="note-state">In draft</span>
+        </li>
+        <li class="note reveal">
+          <span class="note-num">03</span>
+          <h2 class="note-title">What Montessori education taught me about independence</h2>
+          <span class="note-state">In draft</span>
+        </li>
+        <li class="note reveal">
+          <span class="note-num">04</span>
+          <h2 class="note-title">What building startups taught me about learning</h2>
+          <span class="note-state">In draft</span>
+        </li>
+        <li class="note reveal">
+          <span class="note-num">05</span>
+          <h2 class="note-title">On AI, childhood, and human connection</h2>
+          <span class="note-state">In draft</span>
+        </li>
+      </ol>
+      <p class="aside reveal">These are being written slowly. They&rsquo;ll appear here as they&rsquo;re finished.</p>
+    </section>
+
+    <footer class="next-scene">
+      <a href="sketchbook.html">
+        <span>
+          <span class="eyebrow">Next scene</span>
+          <span class="display">Sketchbook</span>
+        </span>
+        <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
+      <div class="colophon">
+        <span>&copy; 2026 Vega Guo</span>
+        <a href="#main">Back to top &uarr;</a>
+      </div>
+    </footer>
+  </main>
+
+  <div class="flood" aria-hidden="true"></div>
+</body>
+</html>

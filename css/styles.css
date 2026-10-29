@@ -1,0 +1,337 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #111;
+    background-color: #fff;
+}
+
+/* Navigation */
+
+nav {
+    border-bottom: 1px solid #ddd;
+    padding: 18px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+nav a {
+    color: #111;
+    text-decoration: none;
+    margin-left: 28px;
+    font-size: 16px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main page container */
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 20px 40px;
+}
+
+/* Hero */
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    padding: 40px 0 35px;
+    border-bottom: 1px solid #ddd;
+}
+
+.hero-text {
+    width: 50%;
+}
+
+.welcome {
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 13px;
+    color: #65717a;
+    margin-bottom: 25px;
+}
+
+h1 {
+    font-size: 58px;
+    margin: 0 0 20px;
+    font-weight: normal;
+}
+
+.intro {
+    font-size: 21px;
+    line-height: 1.5;
+    max-width: 520px;
+}
+
+.handwriting {
+    margin-top: 35px;
+    margin-left: 20px;
+    font-family: cursive;
+    font-style: italic;
+    font-size: 30px;
+    color: #d98b72;
+    transform: rotate(-5deg);
+}
+
+.hero-image {
+    width: 48%;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 590px;
+    object-fit: cover;
+    display: block;
+}
+
+/* About / Interests */
+
+.info-section {
+    display: flex;
+    gap: 70px;
+    padding: 40px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.about,
+.interests {
+    flex: 1;
+}
+
+h2 {
+    font-size: 34px;
+    font-weight: normal;
+    margin-top: 0;
+}
+
+.about p {
+    font-size: 18px;
+    line-height: 1.55;
+}
+
+/* Quote box */
+
+.quote {
+    background-color: #f8eeee;
+    padding: 24px 30px;
+    margin-top: 30px;
+    font-style: italic;
+    font-size: 19px;
+}
+
+.quote small {
+    display: block;
+    margin-top: 15px;
+    font-family: Arial, sans-serif;
+    font-style: normal;
+    letter-spacing: 2px;
+    font-size: 11px;
+    color: #59636c;
+}
+
+/* Interests */
+
+.interest {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.number {
+    width: 50px;
+    height: 50px;
+    background-color: #f6eaea;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-right: 25px;
+    flex-shrink: 0;
+}
+
+.interest h3 {
+    margin: 3px 0 6px;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.interest p {
+    margin: 0;
+    color: #6b7078;
+    line-height: 1.4;
+}
+
+/* Projects */
+
+.projects {
+    padding: 40px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.projects-intro {
+    max-width: 650px;
+    font-size: 18px;
+    line-height: 1.55;
+}
+
+.project {
+    display: flex;
+    gap: 28px;
+    padding: 22px 0;
+    border-top: 1px solid #ddd;
+}
+
+.project-number {
+    flex-shrink: 0;
+    color: #c96857;
+    font-family: Arial, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+.project h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: normal;
+}
+
+.project h3 a {
+    color: inherit;
+    text-decoration-color: #c96857;
+    text-underline-offset: 4px;
+}
+
+.project p {
+    margin: 0;
+    color: #6b7078;
+    line-height: 1.5;
+}
+
+.project .project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-top: 12px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.project-links a {
+    color: #c96857;
+    text-underline-offset: 3px;
+}
+
+/* GitHub */
+
+.online {
+    padding: 35px 0 45px;
+    border-bottom: 1px solid #ddd;
+}
+
+.online-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.github {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.github-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: #111;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.github a {
+    color: #c96857;
+    font-size: 19px;
+}
+
+.github p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.thanks {
+    font-family: cursive;
+    font-size: 24px;
+    transform: rotate(-6deg);
+}
+
+/* Footer */
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 30px;
+    color: #60666c;
+    font-size: 14px;
+}
+
+/* Mobile */
+
+@media (max-width: 750px) {
+
+    .hero,
+    .info-section,
+    .project {
+        flex-direction: column;
+    }
+
+    .hero-text,
+    .hero-image {
+        width: 100%;
+    }
+
+    .hero-image img {
+        height: auto;
+    }
+
+    h1 {
+        font-size: 42px;
+    }
+
+    nav .links {
+        display: none;
+    }
+
+    .online-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 30px;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
