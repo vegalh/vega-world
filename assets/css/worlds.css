@@ -133,6 +133,10 @@
   line-height: 1.2;
   color: var(--w-ink);
   transition: transform .6s var(--ease);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .rail-sub { font-size: .72rem; line-height: 1.4; color: var(--w-dim); }
 .rail-link:hover, .rail-link:focus-visible, .rail-link.is-lit { color: var(--w-ink); }
@@ -505,3 +509,30 @@
   .world-portal { display: none; }
   .detail.is-entering .detail-sheet { transform: none; opacity: 1; }
 }
+
+/* ------------------------------------------------------------ words from my own writing */
+
+.pullquote { margin: 0 0 22px; }
+.pullquote blockquote { margin: 0; padding: 0 0 0 20px; border-left: 2px solid var(--w-accent); }
+.pullquote p {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: 1.22rem;
+  line-height: 1.45;
+  letter-spacing: -.005em;
+}
+.pullquote.is-large p { font-size: clamp(1.4rem, 2.2vw, 1.85rem); line-height: 1.35; }
+.pullquote figcaption { margin: 10px 0 0 22px; font-size: .78rem; color: var(--w-sheet-soft); }
+.quote-list { display: grid; gap: 6px; }
+.quote-link {
+  display: block;
+  padding: 18px 0 8px;
+  border-bottom: 1px solid var(--w-sheet-rule);
+  transition: padding .4s var(--ease);
+}
+.quote-link:hover { padding-left: 6px; }
+.quote-link .eyebrow { display: block; margin-bottom: 12px; color: var(--w-sheet-soft); }
+.notes-list { margin: 0; padding: 0 0 0 1.1em; }
+.notes-list li { margin: 0 0 .7em; max-width: 62ch; line-height: 1.65; }
+.notes-list li::marker { color: var(--w-accent); }

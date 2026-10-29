@@ -6,6 +6,9 @@
    you're nearest. Clicking one opens it full-screen, where its
    collection can be leafed through; closing returns you to
    the same spot in the room.
+   Journal entries (journal/*.md, read by journal.js) hang
+   among the photographs as small notebooks; opening one
+   unfolds it like a page.
 ============================================================ */
 
 (function () {
@@ -34,25 +37,40 @@
   let shown = [];          // the ones hanging under the current filter
   let filter = "all";
   let near = null;         // the photograph you're closest to
+  let entries = [];        // journal entries, in journal/index.json order
+  let photosById = new Map();
 
   // ---------------------------------------------------------------- load
 
+  const drafts = new URLSearchParams(location.search).has("drafts");
+  const journalReady = window.VGJournal ? window.VGJournal.load({ drafts }).catch(() => []) : Promise.resolve([]);
+
   fetch("assets/data/photos.json")
     .then((r) => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(init)
+    .then((data) => journalReady.then((found) => init(data, found)))
     .catch(() => {
       list.innerHTML = '<li class="print-item"><p class="print-missing">The photographs couldn&rsquo;t be loaded.</p></li>';
     });
 
-  function init(data) {
+  function init(data, found = []) {
     (data.collections || []).forEach((c) => collections.set(c.id, c));
     photos = (data.photos || []).filter((p) => p.id && p.src && p.thumb && p.width && p.height);
     photos.forEach((p, k) => { p.number = k + 1; });
-    items = photos.map(makeItem);
+    photosById = new Map(photos.map((p) => [p.id, p]));
+    entries = found;
+    const prints = photos.map(makeItem);
+    const notebooks = entries.map(makeJournalItem);
+    // a notebook after every few photographs, the rest at the end of the walk
+    items = [];
+    prints.forEach((it, k) => { items.push(it); if (k % 3 === 2 && notebooks.length) items.push(notebooks.shift()); });
+    items.push(...notebooks);
+    items.forEach((it) => list.appendChild(it.li));   // keyboard order follows the walk
 
-    // chips for each collection that has photographs
+    // chips for each collection that has photographs, and one for the journal
     const used = new Set(photos.map((p) => p.collection));
-    const options = [{ id: "all", title: "All" }].concat(Array.from(collections.values()).filter((c) => used.has(c.id)));
+    const options = [{ id: "all", title: "All" }]
+      .concat(entries.length ? [{ id: "journal", title: "Journal" }] : [])
+      .concat(Array.from(collections.values()).filter((c) => used.has(c.id)));
     options.forEach((c) => {
       const b = document.createElement("button");
       b.type = "button";
@@ -64,13 +82,72 @@
     });
 
     const asked = new URLSearchParams(location.search).get("c");
-    setFilter(asked && collections.has(asked) ? asked : "all", { keepScroll: true });
+    setFilter(asked && (collections.has(asked) || (asked === "journal" && entries.length)) ? asked : "all", { keepScroll: true });
     if (!calm) requestAnimationFrame(frame);
 
-    // a link straight to one photograph opens it
+    // a link straight to one photograph, or one journal entry, opens it
     const id = decodeURIComponent(location.hash.slice(1));
     const linked = photos.find((p) => p.id === id);
+    const entry = id.startsWith("journal/") && entries.find((e) => e.slug === id.slice(8));
     if (linked) openViewer(linked, null, { push: false });
+    else if (entry) openJournal(entry, null, { push: false });
+  }
+
+  // ---------------------------------------------------------------- journal notebooks among the photographs
+
+  function photoOrPath(ref) {
+    if (!ref) return null;
+    const p = photosById.get(ref);
+    return p ? { src: p.src, thumb: p.thumb, alt: p.alt, tone: p.tone } : { src: ref, thumb: ref, alt: "" };
+  }
+
+  function prettyDate(d) {
+    if (!d) return "";
+    const m = String(d).match(/^(\d{4})-(\d{2})(?:-(\d{2}))?$/);
+    if (!m) return String(d);
+    const date = new Date(Date.UTC(+m[1], +m[2] - 1, +(m[3] || 1)));
+    return date.toLocaleDateString("en-GB", { timeZone: "UTC", year: "numeric", month: "long", ...(m[3] ? { day: "numeric" } : {}) });
+  }
+
+  function makeJournalItem(e) {
+    const li = document.createElement("li");
+    li.className = "print-item journal-item";
+    li.style.setProperty("--ratio", "3 / 4");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "print notebook";
+    const cover = photoOrPath(e.cover || (Array.isArray(e.photos) && e.photos[0]));
+    const card = document.createElement("span");
+    card.className = "notebook-card";
+    let img = null;
+    if (cover) {
+      img = new Image();
+      img.src = cover.thumb;
+      img.alt = "";
+      img.decoding = "async";
+      img.className = "notebook-cover";
+      card.appendChild(img);
+    }
+    const kicker = document.createElement("span");
+    kicker.className = "notebook-kicker";
+    kicker.textContent = [e.type || "Journal", prettyDate(e.date)].filter(Boolean).join(" · ");
+    const name = document.createElement("span");
+    name.className = "notebook-title";
+    name.textContent = e.title;
+    card.append(kicker, name);
+    if (e.location) { const place = document.createElement("span"); place.className = "notebook-place"; place.textContent = e.location; card.appendChild(place); }
+    const tag = document.createElement("span");
+    tag.className = "print-label";
+    tag.textContent = e.draft ? "Journal · draft" : "Journal";
+    btn.append(card, tag);
+    li.appendChild(btn);
+    const pseudo = { id: `journal/${e.slug}`, collection: e.collection, tone: cover && cover.tone };
+    const item = { photo: pseudo, journal: e, li, btn, img, ratio: 0.75, z: 0, sharp: true };
+    if (img) img.addEventListener("load", () => { if (!pseudo.tone) { pseudo.tone = toneOf(img); li.style.setProperty("--tone-of", pseudo.tone); } }, { once: true });
+    else pseudo.tone = "#4a3a30";
+    btn.addEventListener("click", () => openJournal(e, btn));
+    btn.addEventListener("focus", () => { if (!calm) walkTo(item); });
+    return item;
   }
 
   function collectionTitle(id) {
@@ -179,7 +256,7 @@
     DEPTH = small ? 700 : 1000;
     GAP = small ? 720 : 1000;
     STEP = H * (small ? 0.6 : 0.68);
-    shown = items.filter((it) => filter === "all" || it.photo.collection === filter);
+    shown = items.filter((it) => filter === "all" || (filter === "journal" ? it.journal : it.photo.collection === filter));
     items.forEach((it) => { it.li.hidden = !shown.includes(it); });
     countOf.textContent = ` / ${pad(shown.length)}`;
     if (calm) return;
@@ -383,6 +460,13 @@
 
   addEventListener("popstate", () => {
     const id = decodeURIComponent(location.hash.slice(1));
+    if (id.startsWith("journal/")) {
+      const e = entries.find((x) => x.slug === id.slice(8));
+      if (e && journal.hidden) openJournal(e, null, { push: false });
+      else if (!e) closeJournal(true);
+      return;
+    }
+    closeJournal(true);
     const p = photos.find((x) => x.id === id);
     if (p && viewer.hidden) openViewer(p, null, { push: false });
     else if (!p) closeViewer(true);
@@ -415,6 +499,115 @@
     if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
   });
 
+  // ---------------------------------------------------------------- a journal entry, opened like a notebook
+
+  const journal = document.querySelector(".journal");
+  const jPage = journal.querySelector(".journal-page");
+  const jScroll = journal.querySelector(".journal-scroll");
+  const jContext = journal.querySelector(".journal-context");
+  const jPrev = journal.querySelector(".journal-prev");
+  const jNext = journal.querySelector(".journal-next");
+  const jClose = journal.querySelector(".journal-close");
+  let jIndex = 0, jOpener = null, jPushed = false;
+
+  function openJournal(entry, fromBtn, { push = true } = {}) {
+    jIndex = Math.max(0, entries.indexOf(entry));
+    jOpener = fromBtn;
+    viewing = true;
+    renderJournal(0);
+    journal.hidden = false;
+    body.classList.add("viewing", "reading");
+    if (!calm) { journal.classList.add("is-opening"); requestAnimationFrame(() => requestAnimationFrame(() => journal.classList.remove("is-opening"))); }
+    if (push) { history.pushState({ journal: entry.slug }, "", `#journal/${encodeURIComponent(entry.slug)}`); jPushed = true; }
+    else jPushed = false;
+    jClose.focus({ preventScroll: true });
+  }
+
+  function renderJournal(dir) {
+    const e = entries[jIndex];
+    const J = window.VGJournal;
+    const esc = J.esc;
+    const cover = photoOrPath(e.cover || (Array.isArray(e.photos) && e.photos[0]));
+    const embedded = new Set((e.body.match(/\{\{\s*photos?\s+([^}]+)\}\}/g) || []).join(" ").replace(/\{\{\s*photos?|\}\}/g, " ").split(/[\s,]+/).filter(Boolean));
+    const more = (Array.isArray(e.photos) ? e.photos : []).filter((id) => id !== e.cover && !embedded.has(id) && photosById.has(id));
+    const c = e.collection && collections.get(e.collection);
+    const paint = () => {
+      jPage.innerHTML = [
+        cover ? `<figure class="j-cover"><img src="${esc(cover.src)}" alt="${esc(cover.alt || "")}" decoding="async"></figure>` : "",
+        `<header class="j-head"><p class="eyebrow j-kicker">${esc([e.type || "Journal", prettyDate(e.date), e.location].filter(Boolean).join(" · "))}</p>`,
+        `<h2 class="j-title" id="journal-title">${esc(e.title)}</h2>`,
+        e.draft ? `<p class="j-draft">Draft · only visible on your computer</p>` : "",
+        `</header>`,
+        `<div class="j-text">${J.markdown(e.body || "", photosById)}</div>`,
+        more.length ? `<div class="j-contact">${more.map((id) => { const p = photosById.get(id); return `<figure><img src="${esc(p.thumb)}" alt="${esc(p.alt || "")}" loading="lazy" decoding="async"></figure>`; }).join("")}</div>` : "",
+        Array.isArray(e.tags) && e.tags.length ? `<p class="j-tags">${e.tags.map((t) => `<span>${esc(t)}</span>`).join("")}</p>` : "",
+        c ? `<p class="j-related"><button type="button" class="j-collection" data-c="${esc(c.id)}">Walk through ${esc(c.title)} &rarr;</button></p>` : "",
+      ].join("");
+      jContext.textContent = `Journal · ${pad(jIndex + 1)} / ${pad(entries.length)}`;
+      jPrev.disabled = jNext.disabled = entries.length < 2;
+      jScroll.scrollTop = 0;
+      setTone(cover ? (cover.tone || (photosById.get(e.cover) || {}).tone) : "#4a3a30");
+    };
+    if (!dir || calm) { paint(); return; }
+    jPage.classList.add(dir > 0 ? "turn-out-next" : "turn-out-prev");
+    setTimeout(() => {
+      paint();
+      jPage.classList.remove("turn-out-next", "turn-out-prev");
+      jPage.classList.add(dir > 0 ? "turn-in-next" : "turn-in-prev");
+      requestAnimationFrame(() => requestAnimationFrame(() => jPage.classList.remove("turn-in-next", "turn-in-prev")));
+    }, 280);
+  }
+
+  function goJournal(dir) {
+    if (entries.length < 2) return;
+    jIndex = (jIndex + dir + entries.length) % entries.length;
+    renderJournal(dir);
+    history.replaceState(history.state, "", `#journal/${encodeURIComponent(entries[jIndex].slug)}`);
+  }
+
+  function closeJournal(fromHistory) {
+    if (journal.hidden) return;
+    if (jPushed && !fromHistory) { history.back(); return; }   // popstate closes it
+    if (!fromHistory) history.replaceState(history.state, "", location.pathname + location.search);
+    journal.hidden = true;
+    body.classList.remove("viewing", "reading");
+    viewing = false;
+    jPushed = false;
+    if (near) setTone(near.photo.tone);
+    if (jOpener) jOpener.focus({ preventScroll: true });
+  }
+
+  jPrev.addEventListener("click", () => goJournal(-1));
+  jNext.addEventListener("click", () => goJournal(1));
+  jClose.addEventListener("click", () => closeJournal(false));
+  journal.querySelector(".journal-backdrop").addEventListener("click", () => closeJournal(false));
+  // "walk through this collection": close the notebook and show its photographs
+  jPage.addEventListener("click", (ev) => {
+    const b = ev.target.closest(".j-collection");
+    if (!b) return;
+    closeJournal(false);
+    setTimeout(() => setFilter(b.dataset.c), 60);
+  });
+  journal.addEventListener("keydown", (ev) => {
+    if (ev.key === "Escape") { ev.preventDefault(); closeJournal(false); }
+    else if (ev.key === "ArrowRight") { ev.preventDefault(); goJournal(1); }
+    else if (ev.key === "ArrowLeft") { ev.preventDefault(); goJournal(-1); }
+    else if (ev.key === "Tab") {
+      const f = Array.from(journal.querySelectorAll("a[href], button:not([disabled])"));
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+      else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+    }
+  });
+
   // a hook for automated checks
-  window.__memory = { get near() { return near && near.photo.id; }, get shown() { return shown.length; }, openViewer: (id) => openViewer(photos.find((p) => p.id === id), items.find((i) => i.photo.id === id).btn) };
+  window.__memory = {
+    get near() { return near && near.photo.id; },
+    get shown() { return shown.length; },
+    get entries() { return entries.length; },
+    openViewer: (id) => openViewer(photos.find((p) => p.id === id), items.find((i) => i.photo.id === id).btn),
+    openJournal: (slug) => { const it = items.find((i) => i.journal && i.journal.slug === slug); openJournal(it.journal, it.btn); },
+    setFilter,
+  };
 })();

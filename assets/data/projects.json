@@ -8,26 +8,78 @@
       "summary": "A calm, Montessori-inspired companion for parents of young children.",
       "description": "A calm, Montessori-inspired companion for parents of young children. Each day it suggests a hands-on activity suited to your child’s age, and lets you save small moments that build into a record of how they grow. Available in English and 简体中文, on web and iOS.",
       "images": [
-        { "src": "assets/img/work/rootmap.jpg", "width": 600, "height": 1612, "alt": "RootMap on a phone: the Today screen, with a welcome card and today’s inspiration, Matching Socks." }
+        {
+          "src": "assets/img/work/rootmap.jpg",
+          "width": 600,
+          "height": 1612,
+          "alt": "RootMap on a phone: the Today screen, with a welcome card and today’s inspiration, Matching Socks."
+        }
       ],
       "links": [
-        { "label": "Try RootMap", "url": "https://vegalh.github.io/rootmapmvp/" },
-        { "label": "Code on GitHub", "url": "https://github.com/vegalh/RootMapMVP" }
+        {
+          "label": "Try RootMap",
+          "url": "https://vegalh.github.io/rootmapmvp/"
+        },
+        {
+          "label": "Code on GitHub",
+          "url": "https://github.com/vegalh/RootMapMVP"
+        }
+      ],
+      "kind": "Software",
+      "related": [
+        {
+          "world": "greenhouse",
+          "path": "philosophy",
+          "label": "The ideas behind it, in the Greenhouse"
+        },
+        {
+          "world": "observatory",
+          "path": "building-rootmap",
+          "label": "Where it's going, in the Observatory"
+        }
       ]
     },
     {
       "id": "truvit",
       "name": "Truvit",
       "object": "book",
-      "year": "2023–2027",
+      "year": "2023–present",
       "summary": "Helping organizations turn their content libraries into AI models for better operations and personalized training.",
       "description": "Truvit helps businesses and education organizations convert their datasets and book/content libraries into AI models that improve operations and deliver personalized training.",
       "images": [
-        { "src": "Truvitlogo.jpg", "width": 564, "height": 814, "alt": "The Truvit logo." },
-        { "src": "assets/img/prh-working.jpg", "width": 802, "height": 1100, "alt": "Vega working on Truvit." }
+        {
+          "src": "Truvitlogo.jpg",
+          "width": 564,
+          "height": 814,
+          "alt": "The Truvit logo."
+        },
+        {
+          "src": "assets/img/prh-working.jpg",
+          "width": 802,
+          "height": 1100,
+          "alt": "Vega working on Truvit."
+        }
       ],
       "links": [
-        { "label": "Read about Truvit", "url": "truvit.html" }
+        {
+          "label": "Read about Truvit",
+          "url": "truvit.html"
+        }
+      ],
+      "kind": "Venture",
+      "role": "Co-founder · business development & strategy",
+      "status": "Active",
+      "collaborators": "A technical co-founder who leads engineering, and a cross-border team of 13",
+      "idea": "An AI-powered reading platform for personalized reading, vocabulary learned in context, and interactive engagement with books.",
+      "process": [
+        "Ran and analyzed 600+ student surveys at Harvard, Boston University, Brandeis, Wellesley and Babson, and turned what learners said into product and content decisions.",
+        "Partnered with a Harvard Summer School introduction-to-entrepreneurship course, where students worked on Truvit’s real product and business challenges.",
+        "Built a cross-border team of 7 technical and 6 marketing and sales members, and led commercial strategy, partnerships and operations."
+      ],
+      "outcome": [
+        "Grew to more than 1,000 users.",
+        "Established a content agreement with Penguin Random House: 100 public-domain books in a first phase, with plans for 6,000 titles in a second.",
+        "Expanded from consumer reading technology into customized B2B AI work, including an AI curriculum system for an executive education company that answers questions from its learning materials on demand."
       ]
     },
     {
@@ -38,11 +90,30 @@
       "summary": "Searchable circle-time lesson plans for busy preschool teachers.",
       "description": "A mobile-friendly site that helps busy preschool teachers search and filter circle-time lesson plans by each child’s interests, so personalized lessons take less prep time.",
       "images": [
-        { "src": "assets/img/work/peninsula.jpg", "width": 600, "height": 1612, "alt": "Peninsula Montessori Lessons on a phone: lesson search with age, topic and area filters, and popular activities such as Cleaning Mirror." }
+        {
+          "src": "assets/img/work/peninsula.jpg",
+          "width": 600,
+          "height": 1612,
+          "alt": "Peninsula Montessori Lessons on a phone: lesson search with age, topic and area filters, and popular activities such as Cleaning Mirror."
+        }
       ],
       "links": [
-        { "label": "Visit the lessons site", "url": "https://vegalh.github.io/peninsula-montessori-lessons-site/" },
-        { "label": "Code on GitHub", "url": "https://github.com/vegalh/peninsula-montessori-lessons-site" }
+        {
+          "label": "Visit the lessons site",
+          "url": "https://vegalh.github.io/peninsula-montessori-lessons-site/"
+        },
+        {
+          "label": "Code on GitHub",
+          "url": "https://github.com/vegalh/peninsula-montessori-lessons-site"
+        }
+      ],
+      "kind": "Software",
+      "related": [
+        {
+          "world": "greenhouse",
+          "path": "montessori",
+          "label": "Montessori, in the Greenhouse"
+        }
       ]
     },
     {
@@ -53,11 +124,30 @@
       "summary": "A planning tool for Montessori classroom teachers.",
       "description": "A planning tool for Montessori classroom teachers: schedule practical-life activities onto dates, check off materials as they’re ready, and see how much prep time each day needs.",
       "images": [
-        { "src": "assets/img/work/planner.jpg", "width": 600, "height": 1612, "alt": "Lesson Prep Planner on a phone: a form to schedule an activity, and an overview of prep time." }
+        {
+          "src": "assets/img/work/planner.jpg",
+          "width": 600,
+          "height": 1612,
+          "alt": "Lesson Prep Planner on a phone: a form to schedule an activity, and an overview of prep time."
+        }
       ],
       "links": [
-        { "label": "Try Lesson Prep Planner", "url": "https://vegalh.github.io/lesson-prep-planner/" },
-        { "label": "Code on GitHub", "url": "https://github.com/vegalh/lesson-prep-planner" }
+        {
+          "label": "Try Lesson Prep Planner",
+          "url": "https://vegalh.github.io/lesson-prep-planner/"
+        },
+        {
+          "label": "Code on GitHub",
+          "url": "https://github.com/vegalh/lesson-prep-planner"
+        }
+      ],
+      "kind": "Software",
+      "related": [
+        {
+          "world": "greenhouse",
+          "path": "montessori",
+          "label": "Montessori, in the Greenhouse"
+        }
       ]
     },
     {
@@ -68,11 +158,76 @@
       "summary": "Julia Cook’s books, videos and activities, brought together for parents and teachers.",
       "description": "A platform that brings Julia Cook’s books, videos, and activities together, helping parents and teachers understand children’s behaviors and find simple ways to support them.",
       "images": [
-        { "src": "assets/img/work/cookie.jpg", "width": 600, "height": 1612, "alt": "Cookie Bytes by Julia on a phone: “Real help for real moments,” with a search box and example topics such as Getting angry." }
+        {
+          "src": "assets/img/work/cookie.jpg",
+          "width": 600,
+          "height": 1612,
+          "alt": "Cookie Bytes by Julia on a phone: “Real help for real moments,” with a search box and example topics such as Getting angry."
+        }
       ],
       "links": [
-        { "label": "Visit Cookie Bytes", "url": "https://vegalh.github.io/juliacook/" },
-        { "label": "Code on GitHub", "url": "https://github.com/vegalh/juliacook" }
+        {
+          "label": "Visit Cookie Bytes",
+          "url": "https://vegalh.github.io/juliacook/"
+        },
+        {
+          "label": "Code on GitHub",
+          "url": "https://github.com/vegalh/juliacook"
+        }
+      ],
+      "kind": "Collaboration",
+      "collaborators": "Julia Cook",
+      "related": [
+        {
+          "world": "workshop",
+          "path": "prh-publishing",
+          "label": "Children’s publishing with Penguin Random House China"
+        }
+      ]
+    },
+    {
+      "id": "prh-publishing",
+      "name": "Children’s publishing at Penguin Random House China",
+      "object": "book",
+      "kind": "Collaboration",
+      "label": "Publishing",
+      "year": "2019–2023",
+      "role": "Publishing & business development intern",
+      "status": "Completed",
+      "collaborators": "Penguin Random House China; author Julia Cook",
+      "summary": "Children’s books and educational materials, carried between the US and China.",
+      "description": "Coordinated content strategy, author and editor communication, and publication activities for Penguin Pudge and His 12 Zodiac Friends, a 12-title children’s book series, and helped facilitate publishing arrangements involving author Julia Cook.",
+      "process": [
+        "Worked on cross-border opportunities for Julia Cook’s educational materials, including I Am Money, and assisted her at about three professional conferences.",
+        "Reviewed 50+ children’s books and content projects for cross-cultural publishing opportunities in the US and China.",
+        "Joined discussions with publishing stakeholders and digital platforms, including Douyin/TikTok China and Alibaba, on copyright and IP protection through the International Publishers Coalition in China."
+      ],
+      "related": [
+        {
+          "world": "workshop",
+          "path": "cookie",
+          "label": "Cookie Bytes by Julia"
+        }
+      ]
+    },
+    {
+      "id": "parent-prototypes",
+      "name": "Parent-support prototypes",
+      "object": "prototype",
+      "kind": "Experiment",
+      "label": "Field study experiment",
+      "year": "2026",
+      "role": "Independent researcher",
+      "status": "Completed",
+      "summary": "Small tools for parents, tested during my early-childhood field study.",
+      "description": "During a field study of schools in the US and China, I developed and tested prototypes to support parents.",
+      "lessons": "Initial interest did not always translate into repeat use or practical value.",
+      "related": [
+        {
+          "world": "greenhouse",
+          "path": "research/field-study",
+          "label": "The field study, in the Greenhouse"
+        }
       ]
     }
   ]

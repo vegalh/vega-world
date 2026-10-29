@@ -6,6 +6,7 @@
 ============================================================ */
 
 import * as THREE from "three";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 
 // a fixed seed, so the hall is the same hall every visit
 export function seeded(a) {
@@ -117,3 +118,106 @@ export function lines(points, color, opacity) {
 }
 
 export const std = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.85, metalness: 0, ...o });
+
+// ================================================================== surfaces with a little life in them
+// Small canvas textures, drawn once: wood that has grain, stone with speckle,
+// paper with tooth, metal with brushing. Each tiles, so one texture covers a lot.
+
+function tiling(tex, repeat = 1) {
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(repeat, repeat);
+  return tex;
+}
+
+export function woodTexture(seed, { base = "#8a6446", dark = "#5a3d29", planks = 0 } = {}) {
+  const r = seeded(seed);
+  return tiling(canvasTexture(512, 512, (g, w, h) => {
+    g.fillStyle = base; g.fillRect(0, 0, w, h);
+    // long grain lines that wander
+    for (let k = 0; k < 140; k++) {
+      const y0 = r() * h, amp = 2 + r() * 6, freq = 0.004 + r() * 0.01, ph = r() * 6;
+      g.strokeStyle = dark; g.globalAlpha = 0.05 + r() * 0.12; g.lineWidth = 0.6 + r() * 1.6;
+      g.beginPath();
+      for (let x = 0; x <= w; x += 8) { const y = y0 + Math.sin(x * freq + ph) * amp; if (x) g.lineTo(x, y); else g.moveTo(x, y); }
+      g.stroke();
+    }
+    // a knot or two
+    for (let k = 0; k < 2; k++) {
+      const cx = r() * w, cy = r() * h;
+      for (let ring = 1; ring < 6; ring++) { g.globalAlpha = 0.08; g.beginPath(); g.ellipse(cx, cy, ring * 5, ring * 2.4, 0, 0, 7); g.stroke(); }
+    }
+    g.globalAlpha = 1;
+    if (planks) {
+      for (let k = 0; k < planks; k++) {
+        const y = k * h / planks;
+        g.fillStyle = `rgba(255,240,220,${(r() - 0.5) * 0.12 + 0.04})`; g.fillRect(0, y, w, h / planks);
+        g.fillStyle = "rgba(25,14,8,.55)"; g.fillRect(0, y, w, 2);
+        g.fillRect(r() * w, y, 2, h / planks);
+      }
+    }
+  }));
+}
+
+export function stoneTexture(seed, { base = "#8c8578", speck = 0.18, clouds = 1 } = {}) {
+  const r = seeded(seed);
+  return tiling(canvasTexture(512, 512, (g, w, h) => {
+    g.fillStyle = base; g.fillRect(0, 0, w, h);
+    for (let k = 0; k < 60; k++) {
+      const grad = g.createRadialGradient(r() * w, r() * h, 0, r() * w, r() * h, 40 + r() * 120);
+      const v = r() > 0.5 ? 255 : 0;
+      grad.addColorStop(0, `rgba(${v},${v},${v},${(0.03 + r() * 0.04) * clouds})`); grad.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = grad; g.fillRect(0, 0, w, h);
+    }
+    for (let k = 0; k < 2600; k++) {
+      const v = r() > 0.5 ? 255 : 0;
+      g.fillStyle = `rgba(${v},${v},${v},${r() * speck})`;
+      g.fillRect(r() * w, r() * h, 1 + r() * 1.5, 1 + r() * 1.5);
+    }
+  }));
+}
+
+export function paperTexture(seed, { base = "#f4ede1" } = {}) {
+  const r = seeded(seed);
+  return tiling(canvasTexture(256, 256, (g, w, h) => {
+    g.fillStyle = base; g.fillRect(0, 0, w, h);
+    const img = g.getImageData(0, 0, w, h);
+    for (let p = 0; p < img.data.length; p += 4) { const n = (r() - 0.5) * 9; img.data[p] += n; img.data[p + 1] += n; img.data[p + 2] += n; }
+    g.putImageData(img, 0, 0);
+    g.strokeStyle = "rgba(120,100,80,.05)";
+    for (let k = 0; k < 90; k++) { g.beginPath(); const x = r() * w, y = r() * h; g.moveTo(x, y); g.lineTo(x + (r() - 0.5) * 20, y + (r() - 0.5) * 20); g.stroke(); }
+  }));
+}
+
+// greyscale variation for roughnessMap: surfaces that are matte here and polished there
+export function roughnessTexture(seed, { lo = 0.45, hi = 0.85, streak = false } = {}) {
+  const r = seeded(seed);
+  return tiling(canvasTexture(256, 256, (g, w, h) => {
+    const mid = Math.round((lo + hi) / 2 * 255);
+    g.fillStyle = `rgb(${mid},${mid},${mid})`; g.fillRect(0, 0, w, h);
+    for (let k = 0; k < (streak ? 400 : 120); k++) {
+      const v = Math.round((lo + r() * (hi - lo)) * 255);
+      g.fillStyle = `rgba(${v},${v},${v},${streak ? 0.35 : 0.25})`;
+      if (streak) g.fillRect(0, r() * h, w, 1 + r() * 2);
+      else { g.beginPath(); g.arc(r() * w, r() * h, 6 + r() * 30, 0, 7); g.fill(); }
+    }
+  }, false));
+}
+
+// a soft dark patch under an object, so it sits on the floor instead of hovering
+const shadowTex = canvasTexture(128, 128, (g, w) => {
+  const r = g.createRadialGradient(w / 2, w / 2, 0, w / 2, w / 2, w / 2);
+  r.addColorStop(0, "rgba(0,0,0,.75)"); r.addColorStop(0.5, "rgba(0,0,0,.35)"); r.addColorStop(1, "rgba(0,0,0,0)");
+  g.fillStyle = r; g.fillRect(0, 0, w, w);
+}, false);
+export function contactShadow(width, depth, opacity = 0.5) {
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(width, depth), new THREE.MeshBasicMaterial({ map: shadowTex, color: "#000", transparent: true, opacity, depthWrite: false }));
+  m.rotation.x = -Math.PI / 2;
+  m.position.y = 0.012;
+  m.renderOrder = 1;
+  return m;
+}
+
+// boxes with softened edges: furniture and blocks look made rather than cut
+export function rbox(w, h, d, material, radius = Math.min(w, h, d) * 0.12) {
+  return new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 2, Math.min(radius, Math.min(w, h, d) / 2 - 1e-4)), material);
+}

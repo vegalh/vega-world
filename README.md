@@ -8,10 +8,10 @@ Vega Guo's personal website, published with GitHub Pages as plain static files. 
 | --- | --- |
 | Home: the Threshold, an interactive 3D scene | `index.html`, `assets/js/threshold.js`, `assets/css/home.css` |
 | The Atlas: a hall of five little worlds; the door leads here | `atlas.html`, `assets/js/atlas.js`, `assets/css/atlas.css` |
-| The Observatory: observations as stars | `observatory.html`, `assets/js/observatory.js`, `assets/data/observations.json` |
-| The Greenhouse: RootMap, Montessori, ideas about learning | `greenhouse.html`, `assets/js/greenhouse.js`, `assets/data/greenhouse.json` |
-| The Workshop: projects as objects | `workshop.html`, `assets/js/workshop.js`, `assets/data/projects.json` |
-| The Memory Room: photographs, driven by `assets/data/photos.json` | `memory.html`, `assets/js/memory.js`, `assets/css/memory.css` |
+| The Observatory, the Dream House: dreams, beliefs and questions as stars | `observatory.html`, `assets/js/observatory.js`, `assets/data/dreams.json` |
+| The Greenhouse: school observations, Montessori, research, teaching philosophy | `greenhouse.html`, `assets/js/greenhouse.js`, `assets/data/greenhouse.json` |
+| The Workshop: every project, as objects and in the archive cabinet | `workshop.html`, `assets/js/workshop.js`, `assets/data/projects.json` |
+| The Memory Room: photographs and the journal | `memory.html`, `assets/js/memory.js`, `assets/js/journal.js`, `assets/data/photos.json`, `journal/` |
 | The Sketchbook: artwork in a book | `sketchbook-world.html`, `assets/js/sketchbook-world.js`, `assets/data/artworks.json` |
 | Work | `work.html` |
 | About | `about.html` |
@@ -20,7 +20,7 @@ Vega Guo's personal website, published with GitHub Pages as plain static files. 
 | Contact | `contact.html` |
 | Truvit (project page) | `truvit.html` (unchanged; uses `css/styles.css` and `css/truvit.css`) |
 
-**How the worlds are wired, and how to add photographs, observations, projects, Greenhouse entries and artwork:** see [`docs/LITTLE-WORLDS.md`](docs/LITTLE-WORLDS.md).
+**How the worlds are wired, and how to add photographs, journal entries, dreams, projects, Greenhouse entries and artwork:** see [`docs/LITTLE-WORLDS.md`](docs/LITTLE-WORLDS.md).
 
 The shared styles and page transitions for the inner pages are in `assets/css/site.css` and `assets/js/site.js`.
 

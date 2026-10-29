@@ -1,43 +1,230 @@
 {
   "areas": [
     {
-      "id": "rootmap",
-      "object": "tree",
-      "title": "RootMap",
-      "subtitle": "The tree at the centre",
-      "project": "rootmap",
-      "sections": [
-        { "id": "journey", "title": "Product development journey" },
-        { "id": "decisions", "title": "Design decisions" },
-        { "id": "milestones", "title": "Milestones", "timeline": [] }
+      "id": "observations",
+      "object": "notebooks",
+      "title": "School Observations",
+      "subtitle": "Classrooms I’ve visited",
+      "intro": [
+        "I have visited more than ten preschools and kindergartens in the United States and China, and interviewed more than twenty founders, headmasters and educators.",
+        "These are notes from some of those classrooms. Schools are not named unless they have agreed to be, and no child is identified."
+      ],
+      "requireConsent": true,
+      "entries": [
+        {
+          "id": "massachusetts-montessori",
+          "title": "A Montessori classroom in Massachusetts",
+          "type": "School visit",
+          "country": "United States",
+          "location": "Massachusetts",
+          "date": "October 2025",
+          "approach": "Montessori",
+          "setting": "16 children and 3 adults",
+          "context": "A one-hour observation for my Montessori teacher training, focused on the classroom’s layout, movement, transitions and circle time.",
+          "noticed": [
+            "Each curriculum area held around six to eight materials, more in the four main areas, and each looked carefully chosen for the children’s level.",
+            "The room was spacious, without obvious runways; children spread out across the areas to work.",
+            "Every area was labelled, the hand-washing corner had small written reminders, and there was a seat set aside for a teacher to sit and observe."
+          ],
+          "practices": [
+            "To go outside, a child rang a bell. Children put their work away, gathered on a line, and were called by name to fetch shoes, bags and jackets before walking out together.",
+            "Circle time began with good morning and a story, then a breathing exercise and a sharing round, passing a small stuffed animal from child to child.",
+            "The teacher used the volume of her voice to settle the room."
+          ],
+          "reflections": [
+            "Transitions were still a little untidy, but the classroom stayed a relaxed environment."
+          ]
+        },
+        {
+          "id": "childhood-school",
+          "title": "The school I attended as a child",
+          "type": "School visit",
+          "country": "China",
+          "approach": "Montessori",
+          "noticed": [
+            "One child built the Brown Stair into a tower almost every day, trying different ways to make it taller."
+          ],
+          "practices": [
+            "When the teacher saw he had become comfortable with it, she asked if he wanted to draw his tower. As he talked about the drawing, she asked him questions and wrote them on a notecard stuck to it."
+          ],
+          "quotes": [
+            { "text": "What I liked about this interaction was that the child’s genuine interest continued to lead the experience.", "source": "From a reflection written during my Montessori teacher training" },
+            { "text": "The teacher did not decide that he had spent enough time building towers and needed to move on to something else. Instead, she observed what he was already doing and found a way to extend it.", "source": "From the same reflection" }
+          ]
+        }
       ]
     },
     {
       "id": "montessori",
       "object": "shelf",
-      "title": "Montessori",
-      "subtitle": "Teaching and the classroom",
+      "title": "Montessori Experiences",
+      "subtitle": "Teaching and the prepared environment",
       "intro": "Early childhood education is where my questions start: how to support children to reach their full potential. Montessori teacher training and time in the classroom with young children shape how I think about learning.",
       "requireConsent": true,
-      "related": ["peninsula", "planner"],
+      "related": [
+        { "world": "workshop", "path": "peninsula", "label": "Peninsula Montessori Lessons, in the Workshop" },
+        { "world": "workshop", "path": "planner", "label": "Lesson Prep Planner, in the Workshop" }
+      ],
       "entries": [
+        {
+          "id": "toddler-classroom",
+          "title": "Teaching in a toddler classroom",
+          "type": "Practicum teaching",
+          "school": "Peninsula Montessori Academy",
+          "date": "2026 – present",
+          "ageGroup": "Ages 2–3",
+          "areas": ["Practical Life", "Sensorial", "Language", "Math", "Culture"],
+          "body": [
+            "I plan and present individual Montessori lessons for a small group of three to four children, about twelve hours a week.",
+            "Sustained observation of each child’s interests and readiness guides which activities I choose, how I adapt them, and how I document them. I also make hands-on materials and lead circle time.",
+            "With the lead teacher, I work on consistent ground rules and adult responses, and on how we support children’s growing independence."
+          ]
+        },
+        {
+          "id": "three-to-six",
+          "title": "Assisting in a 3–6 classroom",
+          "type": "Practicum / classroom assistant",
+          "school": "Sunrise Montessori",
+          "date": "2025 – 2026",
+          "ageGroup": "Ages 3–6",
+          "areas": ["Practical Life", "Sensorial", "Math", "Language", "Culture"],
+          "body": [
+            "A classroom of twenty children, about fifteen hours a week: individual lessons, making learning materials, and helping to observe and document children’s development.",
+            "I helped keep the prepared environment ready across several classrooms, supported independent work periods and transitions, and kept practical-care routines going, including laundry for four classrooms.",
+            "As part of my teacher training, I designed lesson plans across Practical Life, Sensorial, Math, Language and Culture."
+          ]
+        },
+        {
+          "id": "teacher-training",
+          "title": "Becoming a Montessori teacher",
+          "type": "Teacher training",
+          "school": "Northeast Montessori Institute",
+          "date": "2025 – 2027 (in progress)",
+          "ageGroup": "Early childhood",
+          "body": [
+            "American Montessori Society (AMS) Early Childhood teacher education, in progress.",
+            "Alongside it: the Harvard Certificate in Early Education Leadership, and training with the Massachusetts Department of Early Education and Care."
+          ],
+          "related": [{ "world": "greenhouse", "path": "philosophy", "label": "What the training is teaching me" }]
+        },
+        {
+          "id": "admissions",
+          "title": "Admissions and families",
+          "type": "Admissions & enrollment intern",
+          "school": "Montessori Greenhouse School",
+          "date": "2025",
+          "body": [
+            "Admissions and enrollment work, family communication and classroom visits: a first look at the family-facing side of running a school."
+          ]
+        },
         { "id": "pitcher-paper-stars", "type": "Classroom observation", "status": "draft", "title": "A pitcher, paper stars, and twenty minutes of concentration" },
         { "id": "camera-curiosity", "type": "Classroom observation", "status": "draft", "title": "A young child’s curiosity about a camera" },
         { "id": "independence", "type": "Reflection", "status": "draft", "title": "What Montessori education taught me about independence" }
       ]
     },
     {
-      "id": "learning",
+      "id": "research",
       "object": "table",
-      "title": "Ideas About Learning",
-      "subtitle": "Reflections and questions",
+      "title": "Educational Research",
+      "subtitle": "Field studies, families and questions",
       "intro": [
         "Mostly, I want to understand how children learn, and how adults can become better guides.",
         "I’m exploring how AI can create real, positive impact, especially in education. I believe technology should strengthen meaningful human interactions rather than replace them."
       ],
       "entries": [
+        {
+          "id": "field-study",
+          "title": "An early childhood field study, in the US and China",
+          "type": "Field study",
+          "date": "2025 – 2026",
+          "body": [
+            "I visited more than ten preschools and kindergartens across the United States and China, and interviewed more than twenty founders, headmasters and educators about educational philosophy, child development, parents’ expectations and the challenges of early education.",
+            "In field notes and reports I compared classroom approaches, children’s independence and family expectations, and shared written observations and feedback with the educators I interviewed."
+          ],
+          "related": [
+            { "world": "workshop", "path": "parent-prototypes", "label": "The parent-support prototypes it led to" },
+            { "world": "greenhouse", "path": "observations", "label": "Notes from the classrooms" }
+          ]
+        },
+        {
+          "id": "italy-europe",
+          "title": "Reggio Emilia, Montessori’s birthplace, and Europe’s playgrounds",
+          "type": "Field inquiry",
+          "location": "Italy and Europe",
+          "body": [
+            "I extended the field study with visits to Reggio Emilia and to Maria Montessori’s birthplace in Italy.",
+            "Across Europe, I watched children in public play spaces, looking at learning environments, autonomy and how children play together."
+          ],
+          "related": [{ "world": "observatory", "path": "visited-reggio", "label": "Among the places in the Observatory" }]
+        },
+        {
+          "id": "parent-workshop",
+          "title": "A workshop for parents",
+          "type": "Parent education",
+          "location": "China",
+          "body": [
+            "I designed and led a two-and-a-half-hour workshop at a Montessori school in China for about ten parents, on AI, future-ready skills and activities to do at home.",
+            "Many of the parents’ questions were about educational competition, and about children falling behind."
+          ]
+        },
+        {
+          "id": "interests",
+          "title": "What I want to understand",
+          "type": "Research interests",
+          "body": [
+            "How children learn, and how adults can become better guides.",
+            "Children’s independence, and how it looks different across classrooms and cultures.",
+            "What families expect from early education, and why.",
+            "How technology, including AI, can support educators and families without replacing human relationships."
+          ],
+          "related": [{ "world": "observatory", "path": "school-i-imagine", "label": "The school I imagine, in the Observatory" }]
+        },
         { "id": "startups-learning", "type": "Essay", "status": "draft", "title": "What building startups taught me about learning" },
         { "id": "ai-childhood", "type": "Essay", "status": "draft", "title": "On AI, childhood, and human connection" }
+      ]
+    },
+    {
+      "id": "philosophy",
+      "object": "tree",
+      "title": "Teaching Philosophy",
+      "subtitle": "The tree at the centre: still growing",
+      "intro": "My philosophy of education is still forming. These are sentences from my own writing, kept here as they grow.",
+      "related": [{ "world": "workshop", "path": "rootmap", "label": "RootMap, where these ideas meet a product" }],
+      "entries": [
+        {
+          "id": "control",
+          "title": "What belongs to the adult, and what to the child",
+          "type": "Philosophy",
+          "quotes": [{ "text": "For me, Montessori is not about giving up control completely. It is about learning what needs to be controlled by the adult, what can belong to the child, and how the environment can create space for both the child and the teacher to learn.", "source": "From a reflection written during my Montessori teacher training" }]
+        },
+        {
+          "id": "trust",
+          "title": "Trust, and curiosity",
+          "type": "Philosophy",
+          "quotes": [
+            { "text": "The part of my practice I most want to protect is my trust in children and my curiosity about their choices.", "source": "From a reflection written during my Montessori teacher training" },
+            { "text": "I want to keep being curious about why children do what they do instead of immediately deciding what they should be doing.", "source": "From the same reflection" }
+          ]
+        },
+        {
+          "id": "step-in",
+          "title": "When to step in, when to step back",
+          "type": "Philosophy",
+          "quotes": [{ "text": "I want to become better at knowing when I need to step in, when I can step back, and when something unexpected from a child is something worth following.", "source": "From a reflection written during my Montessori teacher training" }]
+        },
+        {
+          "id": "the-teacher",
+          "title": "The teacher learns too",
+          "type": "Philosophy",
+          "quotes": [{ "text": "Through daily observation, thoughtful preparation, and genuine enthusiasm, the teacher learns alongside the children, guiding rather than directing, inspiring rather than instructing.", "source": "From my writing on the Montessori teacher" }]
+        },
+        {
+          "id": "technology",
+          "title": "Technology that stays human",
+          "type": "Philosophy",
+          "quotes": [{ "text": "I believe technology should strengthen meaningful human interactions rather than replace them.", "source": "From my About page" }],
+          "related": [{ "world": "workshop", "path": "rootmap", "label": "RootMap, in the Workshop" }]
+        }
       ]
     }
   ]

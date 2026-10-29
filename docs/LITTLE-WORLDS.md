@@ -1,151 +1,177 @@
 # Vega's Little Worlds: how the universe is built, and how to fill it
 
-The site is one connected journey:
-
 ```
 The Threshold (index.html)
   → The Atlas (atlas.html)
-    → a world (observatory · greenhouse · workshop · memory · sketchbook-world)
+    → a world
       → something opened in it (#its-id in the address)
     ← back to the world (Esc, ✕, or the browser's Back)
   ← back to the Atlas (“← The Atlas”), which turns to face the world you left
 ```
 
-Everything is static files for GitHub Pages. There's no build step. **All content lives in `assets/data/*.json`**, so adding content never means editing HTML.
+Everything is static files for GitHub Pages (`.nojekyll` makes Pages serve them exactly as they are). There's no build step. **Content lives in `assets/data/*.json` and `journal/*.md`**, so adding content never means editing HTML.
 
-## The worlds
+## Each world has one job
 
-| World | Page | Built with | Content file | What opens things |
-| --- | --- | --- | --- | --- |
-| 01 The Observatory | `observatory.html` | three.js dome | `observations.json` | stars (one constellation per category) |
-| 02 The Greenhouse | `greenhouse.html` | three.js glasshouse | `greenhouse.json` (+ `projects.json` for RootMap) | the tree, the Montessori shelf, the reading table |
-| 03 The Workshop | `workshop.html` | three.js studio | `projects.json` | the computer, books, prototypes, pinned drawings |
-| 04 The Memory Room | `memory.html` | CSS 3D | `photos.json` | photographs |
-| 05 The Sketchbook | `sketchbook-world.html` | paper book (HTML/CSS) | `artworks.json` | tabs, page turns, tipped-in pieces |
+| World | Holds | Page | Content |
+| --- | --- | --- | --- |
+| 04 The Memory Room | **What I remember**: photographs and the journal | `memory.html` | `assets/data/photos.json`, `journal/` |
+| 02 The Greenhouse | **What I've learned about education**: school visits, Montessori practice, research, teaching philosophy | `greenhouse.html` | `assets/data/greenhouse.json` |
+| 03 The Workshop | **Everything I've built**: every project, education-related or not | `workshop.html` | `assets/data/projects.json` |
+| 01 The Observatory (the Dream House) | **What I dream about and believe** | `observatory.html` | `assets/data/dreams.json` |
+| 05 The Sketchbook | **What I draw and imagine** | `sketchbook-world.html` | `assets/data/artworks.json` |
 
-The original pages are unchanged and still in the menu: `work.html`, `about.html`, `notes.html`, `sketchbook.html`, `contact.html`, `truvit.html`.
+**One home per thing.** RootMap's project page lives in the Workshop. The Greenhouse and the Observatory *link* to it with `related` instead of repeating it:
 
-### Shared pieces (`assets/js/worlds/`)
+```json
+"related": [{ "world": "workshop", "path": "rootmap", "label": "RootMap, in the Workshop" }]
+```
 
-- **`ui.js`**: what every world shares.
-  - The **detail viewer**. Each opened item is a history entry (`#path`), so Back and Forward work and closing returns you to the world as you left it.
-  - The **rail**: the same entry points as the 3D objects, for keyboard, touch, screen readers and no-WebGL.
-  - The **gallery** (images, video files, YouTube/Vimeo embeds) and the **placeholders** for missing images and unwritten text.
-  - **Empty and loading states**, and **remembering the world** for the Atlas.
-  - `openWorld()` wires all of this together for a world.
-- **`stage.js`**: the 3D room every 3D world is built in. It handles the renderer, the camera drift, objects you can point at and open, hover labels, the arrival move, reduced motion, and the WebGL fallback.
-- **`craft.js`**: the textures and materials shared by the Atlas and the worlds.
-- **`projects.js`**: how a project reads. The Workshop and the Greenhouse's RootMap area both use it.
+`world` is one of `observatory`, `greenhouse`, `workshop`, `memory` or `sketchbook`. `path` is what goes after `#` on that world's page.
 
-**Without WebGL** (or if three.js can't load), a 3D world becomes its list of contents, and everything still opens.
-**With reduced motion**, scenes hold still, transitions are instant, and the Memory Room becomes a still grid.
+The original pages are unchanged and still in the menu: `work.html`, `about.html`, `notes.html`, `sketchbook.html`, `contact.html` and `truvit.html`.
 
-## Adding content
+## Shared pieces (`assets/js/worlds/`)
 
-Every field not marked *required* is optional; leave out what you don't know. Empty fields are never shown. Unwritten text shows a "Placeholder" note, and a missing image shows a labelled "Missing image" box rather than a broken layout. Order in the file is the order on the page.
+- **`ui.js`**: the reading viewer and its history (Back and Forward work), the rail, galleries (images, video files, YouTube/Vimeo), placeholders, empty states, cross-world links, and `openWorld()`, which wires a world together.
+- **`stage.js`**: the 3D room: camera, things you can point at and open, hover labels, the arrival move, reflections, reduced motion, and the WebGL fallback.
+- **`craft.js`**: shared materials, made in code. Wood grain, stone, paper, roughness variation, soft contact shadows and rounded (bevelled) boxes.
+- **`projects.js`**: how a project reads (the Workshop, and links from other worlds).
 
-The examples below include `// comments` to explain each field. Real JSON can't contain comments, so leave them out of the files. A file with a mistake in it is treated as empty (the world shows its empty state); paste it into any JSON validator to find the error.
+**Without WebGL** (or if three.js can't load), a 3D world becomes its list of contents and everything still opens. **With reduced motion**, scenes hold still and the Memory Room becomes a still grid.
 
-Images: keep them under ~2000px on the long edge. Put them anywhere in the repo, for example `assets/img/observatory/`, `assets/img/greenhouse/`, `assets/img/workshop/` or `assets/img/art/`. Paths are relative to the site root, with no leading slash.
+## Writing content
+
+JSON can't contain comments; the `// notes` below are explanation only. Leave out any field you don't know, and empty fields are never shown. A file with a mistake in it is treated as empty (the world shows its empty state); paste it into any JSON validator to find the error. Images can live anywhere in the repo; use paths with no leading slash, and keep images under ~2000px on the long edge.
+
+### The journal (Memory Room): `journal/`
+
+Each entry is a Markdown file. Details go between the `---` lines at the top; the writing follows.
+
+```markdown
+---
+title: Morning at the market
+date: 2026-07-14              # or 2026-07 for a month
+location: Kyoto
+type: Travel journal          # Journal · Travel journal · Memory · Photo essay
+cover: BL1                    # a photos.json id, or a path to an image
+photos: [BL1, BLGJY]          # shown as a small contact sheet after the writing
+tags: [markets, mornings]
+collection: facades           # a photos.json collection; adds “Walk through…” at the end
+---
+
+Plain paragraphs, with an empty line between them. *Italics*, **bold**, [links](https://…).
+
+## A heading
+
+> A line set apart.
+
+{{photo BL1}}             ← a photograph from photos.json, with its caption
+{{photos BL1 BLGJY}}      ← two side by side
+![Alt text](assets/img/journal/x.jpg "A caption")
+```
+
+**To publish:** save the file as `journal/<name>.md`, add `"<name>"` to `journal/index.json` (the order there is the order in the room), then commit and push.
+
+**Drafts stay private.** Write drafts in `journal/drafts/`, with their own `journal/drafts/index.json`. That folder is in `.gitignore`, so drafts are never committed and never reach GitHub or the live site. Preview them on your computer at `memory.html?drafts`. (A `draft: true` line in a *published* file hides it from the room, but the file itself would still be public. Use the drafts folder.)
 
 ### Photographs: `assets/data/photos.json`
-See "Adding photographs" below. Other worlds can use a photograph by its `id`.
-
-### Observations: `assets/data/observations.json`
-```json
-{
-  "categories": [ { "id": "places", "title": "Places" } ],
-  "observations": [
-    {
-      "id": "kyoto-shadows",                 // required, unique, used in the link: observatory.html#kyoto-shadows
-      "title": "Shadows in the courtyard",   // required
-      "category": "architecture",            // one of the categories; each category is a constellation
-      "date": "2026-04-12",                  // or "year": "2026"
-      "location": "Kyoto",
-      "photos": ["BL1", "BLGJY"],            // ids from photos.json
-      "images": [{ "src": "assets/img/observatory/x.jpg", "alt": "…", "caption": "…" }],
-      "story": ["First paragraph.", "Second paragraph."],
-      "project": "rootmap"                   // links to a project in the Workshop
-    }
-  ]
-}
-```
-The five entries there now are **placeholders** (`"placeholder": true`), shown with a "Placeholder · story to come" badge. Replace them, or delete the `placeholder` line once an entry is real.
-
-### Projects: `assets/data/projects.json` (the Workshop, and RootMap in the Greenhouse)
-```json
-{
-  "id": "rootmap",                          // required; workshop.html#rootmap
-  "name": "RootMap",                        // required
-  "object": "computer",                     // computer | book | prototype | sketch: what it is in the room
-  "label": "Current focus", "year": "2025–", "role": "Founder",
-  "summary": "One line.",
-  "description": "A paragraph, or a list of paragraphs.",
-  "problem": "…", "process": ["…", "…"], "outcome": "…",
-  "images": [{ "src": "…", "width": 600, "height": 1612, "alt": "…", "caption": "…" }],
-  "videos": ["assets/video/demo.mp4", { "src": "https://www.youtube.com/embed/ID", "title": "Demo" }],
-  "links": [{ "label": "Try it", "url": "https://…" }],
-  "timeline": [{ "date": "2026-01", "text": "First version" }]
-}
-```
-The room holds 1 computer, up to 5 books and up to 4 pinned drawings. Anything else becomes another prototype on the bench, which grows to fit.
+1. Put the original in `pictures/`.
+2. Run `sh tools/make-thumbs.sh` (macOS).
+3. Add an entry with `id`, `src`, `thumb`, `width`, `height`, `alt` and `collection` (all required), plus `title`, `location`, `year`, `category`, `description` and `tone` (all optional).
 
 ### The Greenhouse: `assets/data/greenhouse.json`
-Three areas (`object`: `tree`, `shelf`, `table`):
-- **RootMap** (`"project": "rootmap"`) reads the project from `projects.json` and adds its own `sections`. Fill a section with `"body"` (text) or `"timeline"` (milestones).
-- **Montessori** and **Ideas About Learning** each have an `intro` and a list of `entries`:
+
+Four areas, one per object: `notebooks` (School Observations), `shelf` (Montessori Experiences), `table` (Educational Research) and `tree` (Teaching Philosophy). Each area has `title`, `subtitle`, `intro`, `related` and `entries`. An entry uses whichever of these fields it needs:
+
 ```json
 {
-  "id": "pouring-water",                 // greenhouse.html#montessori/pouring-water
-  "title": "…",
-  "type": "Lesson design",               // e.g. Classroom observation, Lesson design, Reflection, Essay, Reading notes, Question
-  "status": "draft",                     // shows "In draft"; leave out once it's written
-  "date": "2026-03",
-  "body": ["Paragraph…"],
+  "id": "shanghai-kindergarten",          // greenhouse.html#observations/shanghai-kindergarten
+  "title": "A kindergarten in Shanghai",
+  "type": "School visit",                  // School visit · Practicum teaching · Field study · Reading notes · Philosophy …
+  "status": "draft",                       // shows “In draft”; leave out once written
+  "school": "Only if the school agreed to be named",
+  "country": "China", "location": "Shanghai", "date": "June 2026",
+  "ageGroup": "Ages 3–6", "approach": "Montessori", "setting": "24 children, 3 teachers",
+  "areas": ["Practical Life", "Sensorial"],
+  "context": "One line on why you were there.",
+  "body": ["Paragraphs…"],
+  "noticed": ["…"], "practices": ["…"], "reflections": ["…"], "questions": ["…"],
+  "quotes": [{ "text": "Your own words", "source": "Where they come from" }],
   "images": [{ "src": "…", "alt": "…", "consent": true }],
-  "tags": ["practical life"]
+  "tags": ["…"],
+  "related": [{ "world": "workshop", "path": "rootmap", "label": "…" }]
 }
 ```
-**Children's privacy:** the Montessori area has `"requireConsent": true`. An image there appears **only** if it has `"consent": true`; others are held back, with a note. Never put children's names or identifying details in the text.
 
-### Artwork: `assets/data/artworks.json` (the Sketchbook)
+**Children's privacy:** never put a child's name, or anything that identifies a child, in this file. In areas marked `"requireConsent": true` (School Observations and Montessori), an image appears **only** with `"consent": true`, meaning you have confirmed permission to publish it. Unpublished or sensitive notes belong in the git-ignored `content-drafts/` folder, never in `assets/`.
+
+### The Workshop: `assets/data/projects.json`
+
 ```json
 {
-  "collections": [{ "id": "watercolor", "title": "Watercolor", "description": "Optional line on the left page" }],
-  "artworks": [
-    {
-      "id": "harbour-morning",              // required; sketchbook-world.html#art/harbour-morning
-      "title": "Harbour, morning",
-      "collection": "watercolor",
-      "year": "2026", "medium": "Watercolour on cotton paper",
-      "image": "assets/img/art/harbour.jpg", "thumb": "assets/img/art/harbour-640.jpg",
-      "width": 1600, "height": 2000, "alt": "…",
-      "description": "…",
-      "process": ["assets/img/art/harbour-sketch.jpg", { "src": "…", "caption": "Underdrawing" }]
-    }
-  ]
+  "id": "rootmap", "name": "RootMap",
+  "object": "computer",          // computer (1) · book (up to 5) · prototype (up to 5) · sketch (up to 4)
+  "kind": "Software",            // groups the archive: Software · Venture · Collaboration · Experiment · Design …
+  "label": "Current focus", "year": "2025–", "role": "Founder", "collaborators": "…", "status": "Active",
+  "summary": "One line.", "description": "…",
+  "idea": "…", "problem": "…", "process": ["…"], "challenges": "…", "outcome": "…", "lessons": "…",
+  "images": [{ "src": "…", "width": 600, "height": 1612, "alt": "…" }],
+  "videos": ["assets/video/demo.mp4", { "src": "https://www.youtube.com/embed/ID", "title": "Demo" }],
+  "links": [{ "label": "Try it", "url": "https://…" }],
+  "timeline": [{ "date": "2026-01", "text": "First version" }],
+  "related": [{ "world": "greenhouse", "path": "philosophy", "label": "…" }]
 }
 ```
-Four pieces fit on a spread; a collection with more continues onto the next spread. An empty collection shows an empty page that says so.
 
-## Adding photographs
+The **archive cabinet** (`workshop.html#archive`) lists every project by kind. A project the room has no object for still lives there and on the rail.
 
-1. Put the original in `pictures/` (JPEG, long edge about 1600–2000px is plenty).
-2. Make its thumbnail with `sh tools/make-thumbs.sh` (macOS; it uses `sips`).
-3. Add an entry to `assets/data/photos.json` with `id`, `src`, `thumb`, `width`, `height`, `alt` and `collection` (all required), plus `title`, `location`, `year`, `category`, `description` and `tone` (all optional).
-4. A new collection goes in `collections` (`id`, `title`, optional `description`).
+### The Dream House (Observatory): `assets/data/dreams.json`
+
+```json
+{
+  "constellations": [{ "id": "places", "title": "Places I Dream Of", "intro": "…" }],
+  "stars": [{
+    "id": "kyoto",                       // observatory.html#kyoto
+    "constellation": "places",
+    "title": "Kyoto in autumn",
+    "kind": "place",                     // statement · reflection · question · goal · place · photo · sketch
+    "status": "Dream",                   // Dream · Visited · Building now · In progress · Believing · Asking · Carrying · Working towards
+    "date": "…", "location": "…",
+    "body": "…", "quotes": [{ "text": "…", "source": "…" }],
+    "photos": ["BL1"], "images": ["…"], "links": [{ "label": "…", "url": "…" }],
+    "related": [{ "world": "memory", "path": "BL1", "label": "…" }],
+    "placeholder": true                  // remove once it's real
+  }]
+}
+```
+
+A star's status sets its light: **Visited** glows gold, **Dream** blue, things being built amber, and questions pulse violet. Keep places you've been (`Visited`) and places you hope to go (`Dream`) distinct.
+
+### The Sketchbook: `assets/data/artworks.json`
+
+```json
+{
+  "collections": [{ "id": "watercolor", "title": "Watercolor", "description": "…" }],
+  "artworks": [{
+    "id": "harbour-morning", "title": "Harbour, morning", "collection": "watercolor",
+    "year": "2026", "medium": "Watercolour on cotton paper",
+    "image": "assets/img/art/harbour.jpg", "thumb": "assets/img/art/harbour-640.jpg", "width": 1600, "height": 2000,
+    "alt": "…", "description": "…",
+    "process": ["assets/img/art/harbour-sketch.jpg", { "src": "…", "caption": "Underdrawing" }]
+  }]
+}
+```
+
+Four pieces fit on a spread; more continue onto the next.
 
 ## The Atlas
-
-The world list is the `<ol class="atlas-index">` in `atlas.html`. Each link's `href` is the world's page, and the 3D hall reads the list. `data-note` is the optional line under a world's name.
+The world list is the `<ol class="atlas-index">` in `atlas.html`, and the 3D hall reads it. `data-note` is the line under a world's name.
 
 ## Previewing and testing
-
 ```sh
-python3 -m http.server 8001      # any free port
-# http://localhost:8001/          the Threshold
-# http://localhost:8001/atlas.html, observatory.html, greenhouse.html, workshop.html, memory.html, sketchbook-world.html
+python3 -m http.server 8001
+# http://localhost:8001/                     the Threshold
+# http://localhost:8001/memory.html?drafts   the Memory Room with your journal drafts
 ```
-Opening the files directly (`file://`) won't work: the 3D and the data need a server.
-
-To try a content change quickly, open the world with `#id` in the address (for example `workshop.html#truvit`) to jump straight to that item.
+Opening files directly (`file://`) won't work: the 3D and the data need a server. Add `#id` to a world's address (for example `workshop.html#truvit`) to jump straight to that item.

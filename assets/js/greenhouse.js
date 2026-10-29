@@ -1,28 +1,28 @@
 /* ============================================================
-   THE GREENHOUSE — growth, childhood, and education
-   Areas come from assets/data/greenhouse.json. Each area has
-   an "object" in the glasshouse:
-     tree    the tree at the centre (RootMap: its "project"
-             is read from projects.json, shared with the Workshop)
-     shelf   the low Montessori shelf
-     table   the reading table
-   An area holds "entries" (observations, lesson designs,
-   essays, reading notes, questions). An area marked
-   "requireConsent" shows an entry's images only when each is
-   marked "consent": true, so no child's photograph appears
-   by accident.
+   THE GREENHOUSE — what I've learned about education
+   Areas come from assets/data/greenhouse.json. Each has an
+   "object" in the glasshouse:
+     notebooks  observation notebooks on the potting bench
+     shelf      the low Montessori shelf
+     table      the reading table
+     tree       the tree at the centre
+   An area holds "entries". One entry can be a school visit,
+   a teaching experience, research, a reflection or a quote
+   from my writing; it shows whichever fields it has.
+   Projects (RootMap and the rest) live in the Workshop; the
+   Greenhouse links to them rather than repeating them.
+   An area marked "requireConsent" shows an entry's images
+   only when each is marked "consent": true, so no child's
+   photograph appears by accident.
 ============================================================ */
 
-import { loadJSON, openWorld, list, h, pad, titleBlock, gallery, mediaFrom, prose, section, placeholderNote, metaLine } from "./worlds/ui.js";
-import { loadProjects, renderProject, timeline } from "./worlds/projects.js";
+import { loadJSON, openWorld, list, h, pad, titleBlock, gallery, mediaFrom, prose, section, placeholderNote, metaLine, facts, crossLinks } from "./worlds/ui.js";
 
-const [data, projects, photoData] = await Promise.all([
+const [data, photoData] = await Promise.all([
   loadJSON("assets/data/greenhouse.json", { areas: [] }),
-  loadProjects(loadJSON),
   loadJSON("assets/data/photos.json", { photos: [] }),
 ]);
 const areas = list(data && data.areas).filter((a) => a && a.id && a.title);
-const projectsById = new Map(projects.map((p) => [p.id, p]));
 const photosById = new Map(list(photoData && photoData.photos).map((p) => [p.id, p]));
 const entriesOf = (a) => list(a.entries).filter((e) => e && e.id && e.title);
 
@@ -30,31 +30,38 @@ const items = areas.map((a) => ({ id: a.id, path: a.id, title: a.title, sub: a.s
 
 // ------------------------------------------------------------------ how each thing reads
 
-function renderArea(a) {
-  const project = a.project && projectsById.get(a.project);
-  const extra = list(a.sections).map((s) => section(s.title,
-    prose(s.body),
-    s.timeline && list(s.timeline).length ? timeline(s.timeline) : null,
-    !s.body && !list(s.timeline).length ? placeholderNote(`${s.title} — not written yet.`) : null));
-  if (project) {
-    extra.push(section("Also in the Workshop", h("p", null, h("a", { class: "pill", href: `workshop.html#${project.id}` }, `${project.name} at the workbench →`))));
-    return renderProject(project, { extra, kicker: a.subtitle });
-  }
+const bullets = (xs) => { const l = list(xs).filter(Boolean); return l.length ? h("ul", { class: "notes-list" }, l.map((x) => h("li", { text: x }))) : null; };
 
+function quotes(qs, { large = false } = {}) {
+  const l = list(qs).filter((q) => q && q.text);
+  if (!l.length) return null;
+  return l.map((q) => h("figure", { class: `pullquote${large ? " is-large" : ""}` },
+    h("blockquote", null, h("p", { text: q.text })),
+    q.source ? h("figcaption", { text: q.source }) : null));
+}
+
+function entryState(e) {
+  if (e.status === "draft") return "In draft";
+  return [e.type, e.date].filter(Boolean).join(" · ");
+}
+
+function renderArea(a) {
   const entries = entriesOf(a);
-  const related = list(a.related).map((id) => projectsById.get(id)).filter(Boolean);
+  // the philosophy reads as words, not as a list of titles
+  const list_ = a.object === "tree"
+    ? h("div", { class: "quote-list" }, entries.map((e) => h("a", { class: "quote-link", href: `#${a.id}/${e.id}` },
+      h("span", { class: "eyebrow", text: e.title }),
+      ...(quotes(list(e.quotes).slice(0, 1)) || [h("p", { text: e.title })]))))
+    : h("ol", { class: "entry-list" }, entries.map((e, k) =>
+      h("li", null, h("a", { href: `#${a.id}/${e.id}` },
+        h("span", { class: "entry-num", text: pad(k + 1) }),
+        h("span", { class: "entry-title", text: e.title }),
+        h("span", { class: "entry-state", text: entryState(e) })))));
   return [
     titleBlock({ kicker: a.subtitle, title: a.title }),
     prose(a.intro),
-    section("In this corner", entries.length
-      ? h("ol", { class: "entry-list" }, entries.map((e, k) =>
-        h("li", null, h("a", { href: `#${a.id}/${e.id}` },
-          h("span", { class: "entry-num", text: pad(k + 1) }),
-          h("span", { class: "entry-title", text: e.title }),
-          h("span", { class: "entry-state", text: e.status === "draft" ? "In draft" : [e.type, e.date].filter(Boolean).join(" · ") })))))
-      : placeholderNote("Nothing has been added here yet.")),
-    related.length ? section("Related projects", h("p", { class: "link-row" },
-      related.map((p) => h("a", { class: "pill", href: `workshop.html#${p.id}` }, `${p.name} →`)))) : null,
+    section(a.object === "tree" ? "In my words" : "In this corner", entries.length ? list_ : placeholderNote("Nothing has been added here yet.")),
+    crossLinks(a.related, "Related"),
   ];
 }
 
@@ -62,12 +69,22 @@ function renderEntry(a, e) {
   let media = mediaFrom(e, photosById);
   const withheld = a.requireConsent ? media.filter((m) => !m.consent).length : 0;
   if (a.requireConsent) media = media.filter((m) => m.consent);
+  const school = a.object === "notebooks";
   return [
-    titleBlock({ kicker: [e.type, e.date || e.year].filter(Boolean).join(" · "), title: e.title, badge: e.status === "draft" ? "In draft" : null }),
+    titleBlock({ kicker: [e.type, e.location, e.country].filter(Boolean).join(" · "), title: e.title, badge: e.status === "draft" ? "In draft" : null }),
+    e.context ? h("p", { class: "detail-lede", text: e.context }) : null,
     gallery(media),
-    withheld ? metaLine([`${withheld} image${withheld > 1 ? "s" : ""} not shown: not marked as authorised.`]) : null,
-    prose(e.body, e.status === "draft" ? "This piece is still being written." : "Not written yet."),
+    withheld ? metaLine([`${withheld} image${withheld > 1 ? "s" : ""} not shown: not marked as authorised for publication.`]) : null,
+    facts([["School", e.school], ["When", e.date || e.year], ["Age group", e.ageGroup], ["Approach", e.approach], ["Setting", e.setting]]),
+    list(e.areas).length ? metaLine(list(e.areas)) : null,
+    ...(quotes(e.quotes, { large: true }) || []),
+    prose(e.body, !list(e.quotes).length && !list(e.noticed).length ? (e.status === "draft" ? "This piece is still being written." : "Not written yet.") : null),
+    list(e.noticed).length ? section("What I noticed", bullets(e.noticed)) : null,
+    list(e.practices).length ? section("Teaching practices", bullets(e.practices)) : null,
+    list(e.reflections).length ? section("Reflections", bullets(e.reflections)) : null,
+    school || list(e.questions).length ? section("Questions it raised", bullets(e.questions) || placeholderNote("Not written yet.")) : null,
     list(e.tags).length ? metaLine(list(e.tags)) : null,
+    crossLinks(e.related, "Related"),
     h("p", { class: "link-row" }, h("a", { class: "pill", href: `#${a.id}` }, `← ${a.title}`)),
   ];
 }
@@ -95,12 +112,13 @@ openWorld({
 const lerp = (a, b, k) => a + (b - a) * k;
 
 function buildGlasshouse(S) {
-  const { THREE, std, glow, glowTex, canvasTexture, seeded, portrait, fovFor } = S;
+  const { THREE, std, glow, glowTex, canvasTexture, seeded, portrait, fovFor, woodTexture, stoneTexture, roughnessTexture, contactShadow, rbox } = S;
   const stage = S.createStage({
     canvas: document.querySelector(".stage"),
     background: "#e8d9b8",
     fog: 0.026,
     exposure: 1.0,
+    environment: 0.4,
     rest: () => {
       const k = portrait();
       return {
@@ -121,11 +139,13 @@ function buildGlasshouse(S) {
   const cast = (o) => { o.traverse((m) => { if (m.isMesh) { m.castShadow = shadows; m.receiveShadow = shadows; } }); return o; };
 
   const W = 6, WALL = 4.2, Z0 = 4, Z1 = -24;
-  const iron = std("#3b3a2c", { metalness: 0.5, roughness: 0.5 });
-  const wood = std("#9a6f4a", { roughness: 0.7 });
-  const pale = std("#d8c5a3", { roughness: 0.9 });
-  const leaves = ["#6f8a4f", "#8fa860", "#56703f", "#a3b56c"].map((c) => std(c, { flatShading: true, roughness: 0.8 }));
-  const terracotta = std("#b8714f", { roughness: 0.9 });
+  // painted iron, oiled oak, travertine, terracotta: the greenhouse's materials
+  const iron = std("#3b3a2c", { metalness: 0.55, roughness: 0.45, roughnessMap: roughnessTexture(31, { lo: 0.35, hi: 0.7 }) });
+  const wood = std("#ffffff", { map: woodTexture(32, { base: "#a7794f", dark: "#6a4528" }), roughnessMap: roughnessTexture(33, { lo: 0.5, hi: 0.8, streak: true }), roughness: 1 });
+  const pale = std("#ffffff", { map: stoneTexture(34, { base: "#d8c5a3", speck: 0.12, clouds: 0.6 }), roughness: 0.9 });
+  const leaves = ["#6f8a4f", "#8fa860", "#56703f", "#a3b56c"].map((c) => std(c, { flatShading: true, roughness: 0.75 }));
+  const terracotta = std("#ffffff", { map: stoneTexture(35, { base: "#b8714f", speck: 0.14, clouds: 0.8 }), roughness: 0.92 });
+  const ground = (x, z, w, d, op = 0.32) => { const c = contactShadow(w, d, op); c.position.set(x, 0.012, z); scene.add(c); };
 
   // ---------------------------------------------------------------- the floor: pale stone in a herringbone of tiles
   const tiles = canvasTexture(512, 512, (g, w) => {
@@ -281,6 +301,7 @@ function buildGlasshouse(S) {
   tree.add(treeHit);
   tree.position.set(0, 0, -10.5);
   scene.add(cast(tree));
+  ground(0, -10.5, 6, 6, 0.3);
   spot(byObject.get("tree"), tree, "The tree at the centre", {
     hit: treeHit, anchor: V(0, 6.4, 0),
     onState: (s) => { rootMat.emissiveIntensity = 0.15 + s * 1.4; canopy.scale.setScalar(1 + s * 0.04); },
@@ -315,6 +336,7 @@ function buildGlasshouse(S) {
   shelf.add(at(new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.16, 0.36), std("#7d8f5c")), 0.6, 0.61, 0));
   shelf.position.set(-3.6, 0, -5.2); shelf.rotation.y = 0.6;
   scene.add(cast(shelf));
+  ground(-3.6, -5.2, 3.6, 2.4);
   spot(byObject.get("shelf"), shelf, "The Montessori shelf", {
     onState: (s) => { tray.position.y = 1.1 + s * 0.06; },
   });
@@ -348,8 +370,57 @@ function buildGlasshouse(S) {
   table.add(chair);
   table.position.set(3.6, 0, -6.4); table.rotation.y = -0.5;
   scene.add(cast(table));
+  ground(3.6, -6.4, 2.6, 2.6);
   spot(byObject.get("table"), table, "The reading table", {
     onState: (s) => { lampHalo.material.opacity = 0.35 + s * 0.5; lampHalo.scale.setScalar(1.2 + s * 0.8); },
+  });
+
+  // ---------------------------------------------------------------- the potting bench: observation notebooks among seedlings
+  const bench = new THREE.Group();
+  bench.add(at(rbox(2.4, 0.08, 0.9, wood, 0.025), 0, 1.0, 0));
+  bench.add(at(rbox(2.3, 0.05, 0.8, wood, 0.015), 0, 0.35, 0));
+  for (const [x, z] of [[-1.1, -0.38], [1.1, -0.38], [-1.1, 0.38], [1.1, 0.38]]) bench.add(at(rbox(0.08, 1.0, 0.08, wood, 0.02), x, 0.5, z));
+  bench.add(at(rbox(2.4, 0.5, 0.05, wood, 0.015), 0, 1.28, -0.43));
+  // a stack of notebooks, and one lying open with a pencil across it
+  const covers = ["#3c5a64", "#b8714f", "#5f7a3c", "#d9c7a0"];
+  const notebooks = new THREE.Group();
+  covers.forEach((c, k) => {
+    const nb = new THREE.Group();
+    nb.add(rbox(0.5, 0.05, 0.36, std(c, { roughness: 0.85 }), 0.012));
+    nb.add(at(new THREE.Mesh(new THREE.BoxGeometry(0.48, 0.04, 0.34), std("#f3ecdc", { roughness: 1 })), 0.01, 0, 0));
+    nb.position.set(-0.55, 1.07 + k * 0.055, 0.02); nb.rotation.y = (k % 2 ? 0.12 : -0.06) + k * 0.03;
+    notebooks.add(nb);
+  });
+  const notePaper = std("#faf5ea", { roughness: 1 });
+  for (const side of [-1, 1]) {
+    const page = new THREE.Mesh(new THREE.PlaneGeometry(0.34, 0.46, 6, 1), notePaper);
+    const pos = page.geometry.attributes.position;
+    for (let v = 0; v < pos.count; v++) { const x = pos.getX(v); pos.setZ(v, Math.sin((x / 0.34 + 0.5) * Math.PI) * 0.015 * side * side); }
+    page.geometry.computeVertexNormals();
+    page.rotation.set(-Math.PI / 2, side * 0.08, 0.2);
+    page.position.set(0.32 + side * 0.17, 1.05, 0.08);
+    notebooks.add(page);
+  }
+  const pencil = at(new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.42, 6), std("#d9a441")), 0.36, 1.07, 0.1);
+  pencil.rotation.set(Math.PI / 2, 0, 0.9);
+  notebooks.add(pencil);
+  bench.add(notebooks);
+  // seedlings in small pots along the back
+  for (let k = 0; k < 6; k++) {
+    const pot = at(new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 0.14, 14), terracotta), -1.0 + k * 0.4, 1.11, -0.28);
+    bench.add(pot);
+    for (let l = 0; l < 3; l++) {
+      const sprout = new THREE.Mesh(leafGeo, leaves[(k + l) % leaves.length]);
+      sprout.scale.setScalar(0.05 + r() * 0.04);
+      sprout.position.set(-1.0 + k * 0.4 + (r() - 0.5) * 0.08, 1.24 + l * 0.04, -0.28 + (r() - 0.5) * 0.08);
+      bench.add(sprout);
+    }
+  }
+  bench.position.set(3.4, 0, -13.2); bench.rotation.y = -0.55;
+  scene.add(cast(bench));
+  ground(3.4, -13.2, 3.2, 2);
+  spot(byObject.get("notebooks"), bench, "The observation notebooks", {
+    onState: (s) => { notebooks.position.y = s * 0.05; notebooks.rotation.y = s * 0.05; },
   });
 
   // ---------------------------------------------------------------- pollen in the sunlight

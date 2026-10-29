@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Memory Room — Vega Guo</title>
-  <meta name="description" content="Photographs by Vega Guo: buildings, streets, and small moments.">
+  <meta name="description" content="Photographs and a journal by Vega Guo: buildings, streets, travels and small moments.">
   <meta name="theme-color" content="#120d12">
   <meta property="og:title" content="The Memory Room — Vega Guo">
   <meta property="og:description" content="Photographs by Vega Guo: buildings, streets, and small moments.">
@@ -29,6 +29,7 @@
     })(document.documentElement);
   </script>
   <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/journal.js" defer></script>
   <script src="assets/js/memory.js" defer></script>
 </head>
 
@@ -105,6 +106,22 @@
       <button class="viewer-btn viewer-next" type="button" aria-label="Next photograph"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5"/></svg></button>
       <button class="viewer-btn viewer-close" type="button" aria-label="Close and return to the room"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4 4 14"/></svg></button>
     </div>
+  </div>
+
+  <!-- a journal entry, opened like a notebook; written in journal/*.md -->
+  <div class="journal" role="dialog" aria-modal="true" aria-labelledby="journal-title" hidden>
+    <div class="journal-backdrop" aria-hidden="true"></div>
+    <article class="journal-book">
+      <div class="journal-bar">
+        <p class="eyebrow journal-context">Journal</p>
+        <div class="journal-nav">
+          <button class="viewer-btn journal-prev" type="button" aria-label="Previous entry"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M16 9H3M8 4 3 9l5 5"/></svg></button>
+          <button class="viewer-btn journal-next" type="button" aria-label="Next entry"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M2 9h13M10 4l5 5-5 5"/></svg></button>
+          <button class="viewer-btn journal-close" type="button" aria-label="Close the journal and return to the room"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M4 4l10 10M14 4 4 14"/></svg></button>
+        </div>
+      </div>
+      <div class="journal-scroll" tabindex="-1"><div class="journal-page"></div></div>
+    </article>
   </div>
 
   <div class="grain" aria-hidden="true"></div>

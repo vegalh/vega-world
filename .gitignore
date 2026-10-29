@@ -1,0 +1,6 @@
+# Private writing: never committed, never deployed.
+# Journal drafts are previewed locally with memory.html?drafts (see docs/LITTLE-WORLDS.md).
+journal/drafts/
+# Notes for review: material drafted from private documents, kept off the public site.
+content-drafts/
+.DS_Store

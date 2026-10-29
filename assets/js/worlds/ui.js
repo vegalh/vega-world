@@ -362,8 +362,9 @@ export function createDetail({ resolve, onChange, closeLabel = "Return to the wo
 
 /*
   openWorld({ items, resolve, empty, scene })
-  items: what can be opened — [{ id, path, title, sub, accent }]; id names the
-         object in the scene, path is what the viewer shows (#path)
+  items: what can be opened — [{ id, path, title, sub, accent, rail }]; id names
+         the object in the scene, path is what the viewer shows (#path);
+         rail: false keeps it off the list (it's reached from another item)
   scene(stageModule): builds the 3D room (async is fine) and returns its stage,
          or null; the module is stage.js, which also carries craft.js
   The rail, the viewer and the room all answer one another; without WebGL
@@ -381,7 +382,8 @@ export async function openWorld({ items, resolve, empty, scene }) {
       if (it) stage.focus(it.id); else stage.unfocus();
     },
   });
-  const links = createRail(document.querySelector(".world-rail"), items, {
+  const railItems = items.filter((i) => i.rail !== false);
+  const links = createRail(document.querySelector(".world-rail"), railItems, {
     onHover: (id) => stage && stage.highlight(id),
     onOpen: (path) => detail.open(path),
   });
@@ -402,10 +404,26 @@ export async function openWorld({ items, resolve, empty, scene }) {
   if (!stage) root.classList.add("no-webgl");
   else {
     stage.onPick((id) => { const it = items.find((i) => i.id === id); if (it) detail.open(it.path); });
-    stage.onHover((id) => links.forEach((a, k) => a.classList.toggle("is-lit", items[k].id === id)));
+    stage.onHover((id) => links.forEach((a, k) => a.classList.toggle("is-lit", railItems[k].id === id)));
   }
   arrive();
   detail.start();
   window.__world = { detail, stage, items };
   return { detail, stage };
+}
+
+// ------------------------------------------------------------------ links between worlds
+
+const WORLD_FILES = { observatory: "observatory.html", greenhouse: "greenhouse.html", workshop: "workshop.html", memory: "memory.html", sketchbook: "sketchbook-world.html" };
+
+// related: [{ world, path, label }] → links to that thing in its own world (one home per thing)
+export function crossLinks(related, title = "Elsewhere in the universe") {
+  const items = list(related).filter((r) => r && r.world && WORLD_FILES[r.world]);
+  if (!items.length) return null;
+  const here = location.pathname.split("/").pop() || "index.html";
+  return section(title, h("p", { class: "link-row" }, items.map((r) => {
+    const file = WORLD_FILES[r.world];
+    const href = file === here ? `#${r.path || ""}` : `${file}${r.path ? `#${r.path}` : ""}`;
+    return h("a", { class: "pill", href }, `${r.label || r.path} →`);
+  })));
 }

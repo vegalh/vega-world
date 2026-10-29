@@ -110,8 +110,19 @@
 .spread {
   position: relative;
   display: flex;
-  height: min(64vh, calc(var(--w) * .62));
+  /* two portrait pages, close to A-series proportions */
+  height: min(66vh, calc(var(--w) * .68));
   perspective: 2200px;
+}
+.spread::after {
+  /* soft daylight from the upper left, falling off towards the lower right */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(90% 80% at 18% 8%, rgba(255, 250, 238, .35), transparent 60%), linear-gradient(160deg, transparent 55%, rgba(80, 60, 40, .08));
+  mix-blend-mode: soft-light;
 }
 .spread::before {
   /* the cover, just showing around the pages */
@@ -122,6 +133,10 @@
   background: var(--cover);
   box-shadow: 0 40px 80px -30px rgba(40, 30, 50, .55), 0 10px 20px -10px rgba(40, 30, 50, .4);
 }
+/* paper grain, shared by every sheet */
+.page, .leaf-face {
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .36 0 0 0 0 .28 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+}
 .page {
   position: relative;
   flex: 1 1 50%;
@@ -130,8 +145,31 @@
   background: var(--paper);
   color: var(--w-ink);
 }
-.page-left { background: linear-gradient(90deg, var(--paper) 82%, #ece4d4 100%); border-radius: 3px 0 0 3px; }
-.page-right { background: linear-gradient(270deg, var(--paper) 86%, #e9e0cf 100%); border-radius: 0 3px 3px 0; }
+/* the gutter: pages curve down into the spine; the outer edges show the thickness of the block */
+.page-left {
+  background: var(--grain), linear-gradient(90deg, var(--paper) 72%, #ece3d1 92%, #d9ccb4 100%);
+  border-radius: 3px 0 0 3px;
+  box-shadow: -1px 1px 0 #e9e0ce, -2px 2px 0 #f6f0e4, -3px 3px 0 #e4d9c5, -4px 4px 0 #f3ecdf, -5px 5px 0 #ddd1bb;
+}
+.page-right {
+  background: var(--grain), linear-gradient(270deg, var(--paper) 76%, #ebe2cf 93%, #d6c9b0 100%);
+  border-radius: 0 3px 3px 0;
+  box-shadow: 1px 1px 0 #e9e0ce, 2px 2px 0 #f6f0e4, 3px 3px 0 #e4d9c5, 4px 4px 0 #f3ecdf, 5px 5px 0 #ddd1bb;
+}
+/* a ribbon marker, from the head of the spine down past the foot */
+.page-right::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  left: 10px;
+  top: -8px;
+  width: 9px;
+  height: calc(100% + 40px);
+  background: linear-gradient(90deg, #8e3a33, #b0473f 50%, #8e3a33);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 94%, 0 100%);
+  box-shadow: 1px 0 2px rgba(0, 0, 0, .2);
+  pointer-events: none;
+}
 
 .page-eyebrow { margin: 0; color: var(--w-soft); }
 .page-title {
@@ -208,11 +246,11 @@
   display: block;
   min-height: 0;
   max-width: 100%;
-  max-height: calc(min(64vh, var(--w) * .62) / 2 - 90px);
+  max-height: calc(min(66vh, var(--w) * .68) / 2 - 90px);
   aspect-ratio: var(--ratio);
   object-fit: cover;
 }
-.n1 .tipped img { max-height: calc(min(64vh, var(--w) * .62) - 140px); }
+.n1 .tipped img { max-height: calc(min(66vh, var(--w) * .68) - 140px); }
 .tipped-label { padding: 0 2px 8px; font-size: .7rem; color: var(--w-soft); }
 .tipped-missing {
   display: grid;
@@ -248,8 +286,20 @@
   background: var(--paper);
   box-shadow: 0 0 40px rgba(60, 45, 30, .18);
 }
-.leaf-front { background: linear-gradient(270deg, var(--paper) 80%, #e9e0cf 100%); }
-.leaf-back { transform: rotateY(180deg); background: linear-gradient(90deg, var(--paper) 80%, #ece4d4 100%); }
+.leaf-front { background: var(--grain), linear-gradient(270deg, var(--paper) 78%, #e9e0cf 100%); }
+.leaf-back { transform: rotateY(180deg); background: var(--grain), linear-gradient(90deg, var(--paper) 78%, #ece4d4 100%); }
+/* as the leaf lifts, it darkens away from the light, then brightens as it lands */
+.leaf-face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(60, 45, 30, .28), rgba(60, 45, 30, 0) 70%);
+  opacity: 0;
+}
+.leaf.is-turning .leaf-face::after { animation: leaf-shade .82s cubic-bezier(.45,.05,.3,1); }
+@keyframes leaf-shade { 0% { opacity: 0; } 45% { opacity: 1; } 100% { opacity: 0; } }
+/* and the page beneath catches its moving shadow */
+.leaf.is-turning ~ .page-right, .leaf.is-turning ~ .page-left { transition: filter .4s; }
 
 .book-controls {
   display: flex;

@@ -15,3 +15,14 @@
   --w-sheet-rule: rgba(238, 241, 251, .13);
   --w-shade: rgba(5, 7, 14, .7);
 }
+
+/* each star in a list wears its own light */
+.star-list a { grid-template-columns: 1.4rem 1fr auto; }
+.star-dot {
+  width: 9px; height: 9px;
+  align-self: center;
+  border-radius: 50%;
+  background: var(--star, #e6eeff);
+  box-shadow: 0 0 10px 2px color-mix(in srgb, var(--star, #e6eeff) 60%, transparent);
+}
+.dream-open { margin: 10px 0 0; font-family: var(--display); font-weight: 300; font-size: 1.15rem; color: var(--w-sheet-soft); }

@@ -7,6 +7,7 @@
 ============================================================ */
 
 import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { showLabel, reduceMotion } from "./ui.js";
 
 export { THREE };
@@ -24,11 +25,11 @@ export function fovFor(hfovDeg) {
 }
 
 /*
-  createStage({ canvas, background, fog, exposure, rest })
+  createStage({ canvas, background, fog, exposure, rest, drift, environment })
   rest() → { pos, target, fov } for the current screen shape.
   Returns null when WebGL isn't available.
 */
-export function createStage({ canvas, background = "#111", fog = 0.02, exposure = 1, rest, drift = 1 }) {
+export function createStage({ canvas, background = "#111", fog = 0.02, exposure = 1, rest, drift = 1, environment = 0 }) {
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
@@ -47,6 +48,14 @@ export function createStage({ canvas, background = "#111", fog = 0.02, exposure 
   scene.background = bg;
   if (fog) scene.fog = new THREE.FogExp2(bg, fog);
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 500);
+
+  // soft reflections for metal, glass and varnish: a studio environment, baked once
+  if (environment > 0) {
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environmentIntensity = environment;
+    pmrem.dispose();
+  }
 
   const pose = { pos: new THREE.Vector3(), target: new THREE.Vector3(), fov: 45, inter: 0 };
   const spots = new Map();
@@ -147,11 +156,13 @@ export function createStage({ canvas, background = "#111", fog = 0.02, exposure 
   canvas.addEventListener("pointerdown", (e) => {
     down = { x: e.clientX, y: e.clientY, yaw: yawAim, drag: e.pointerType !== "mouse" };
   });
-  addEventListener("pointerup", (e) => {
-    if (!down) return;
-    const moved = Math.hypot(e.clientX - down.x, e.clientY - down.y);
+  addEventListener("pointerup", () => { if (down) down.up = true; });
+  // open on click, not pointerup: on touch screens the browser sends a click after the
+  // finger lifts, and it would land on whatever just opened under the finger
+  canvas.addEventListener("click", (e) => {
+    const start = down;
     down = null;
-    if (moved > 10 || e.target !== canvas) return;
+    if (!start || Math.hypot(e.clientX - start.x, e.clientY - start.y) > 10) return;
     const id = pick(e.clientX, e.clientY);
     if (id && pickHandler) pickHandler(id);
   });

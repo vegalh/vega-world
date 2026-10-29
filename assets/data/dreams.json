@@ -1,0 +1,173 @@
+{
+  "constellations": [
+    { "id": "places", "title": "Places I Dream Of", "intro": "Places I’ve been that stayed with me, and places I hope to go. Each one says which it is." },
+    { "id": "school-i-imagine", "title": "The School I Imagine", "intro": "What I keep asking about the school I’d want to make, or to teach in." },
+    { "id": "believe", "title": "Things I Believe", "intro": "Beliefs I’ve found myself writing down." },
+    { "id": "future", "title": "The Future I’m Building", "intro": "What I’m working on now, and what I’m working towards." },
+    { "id": "questions", "title": "Questions I Carry", "intro": "Questions without answers yet. They don’t need them." }
+  ],
+  "stars": [
+    {
+      "id": "visited-reggio",
+      "constellation": "places",
+      "title": "Reggio Emilia",
+      "kind": "place",
+      "status": "Visited",
+      "location": "Italy",
+      "body": "I visited Reggio Emilia as part of my early childhood field study.",
+      "related": [{ "world": "greenhouse", "path": "research/italy-europe", "label": "The field inquiry, in the Greenhouse" }]
+    },
+    {
+      "id": "visited-montessori-birthplace",
+      "constellation": "places",
+      "title": "Maria Montessori’s birthplace",
+      "kind": "place",
+      "status": "Visited",
+      "location": "Italy",
+      "body": "I visited the town where Maria Montessori was born, as part of my field inquiry in Italy.",
+      "related": [{ "world": "greenhouse", "path": "research/italy-europe", "label": "The field inquiry, in the Greenhouse" }]
+    },
+    {
+      "id": "visited-paris",
+      "constellation": "places",
+      "title": "Paris",
+      "kind": "place",
+      "status": "Visited",
+      "location": "France",
+      "photos": ["vega"],
+      "related": [{ "world": "memory", "path": "vega", "label": "In the Memory Room" }]
+    },
+    { "id": "dream-place-1", "constellation": "places", "title": "A place I dream of", "kind": "place", "status": "Dream", "placeholder": true },
+    { "id": "dream-place-2", "constellation": "places", "title": "Another place I dream of", "kind": "place", "status": "Dream", "placeholder": true },
+
+    {
+      "id": "meaningful-childhood",
+      "constellation": "school-i-imagine",
+      "title": "What should a meaningful childhood look like?",
+      "kind": "question",
+      "status": "Asking"
+    },
+    {
+      "id": "understand-children",
+      "constellation": "school-i-imagine",
+      "title": "How can adults better understand children?",
+      "kind": "question",
+      "status": "Asking",
+      "quotes": [{ "text": "Mostly, I want to understand how children learn, and how adults can become better guides.", "source": "From my About page" }],
+      "related": [{ "world": "greenhouse", "path": "philosophy", "label": "My teaching philosophy, in the Greenhouse" }]
+    },
+    {
+      "id": "learning-environment",
+      "constellation": "school-i-imagine",
+      "title": "What should an ideal learning environment provide?",
+      "kind": "question",
+      "status": "Asking",
+      "quotes": [{ "text": "…how the environment can create space for both the child and the teacher to learn.", "source": "From a reflection written during my Montessori teacher training" }],
+      "related": [{ "world": "greenhouse", "path": "observations", "label": "Classrooms I’ve visited" }]
+    },
+    {
+      "id": "technology-educators",
+      "constellation": "school-i-imagine",
+      "title": "How can technology support educators without replacing human relationships?",
+      "kind": "question",
+      "status": "Asking",
+      "related": [
+        { "world": "greenhouse", "path": "philosophy/technology", "label": "Technology that stays human" },
+        { "world": "workshop", "path": "rootmap", "label": "RootMap, in the Workshop" }
+      ]
+    },
+
+    {
+      "id": "children-choose",
+      "constellation": "believe",
+      "title": "Children can make their own decisions",
+      "kind": "statement",
+      "status": "Believing",
+      "quotes": [
+        { "text": "At that time, I naturally believed that children could make their own decisions and take responsibility for those decisions.", "source": "From a reflection on mentoring an international children’s travel group, before I began teaching" },
+        { "text": "The Montessori model brings me somewhere between these two ways of being, hopefully a little closer to my beginning side.", "source": "From the same reflection" }
+      ]
+    },
+    {
+      "id": "human-technology",
+      "constellation": "believe",
+      "title": "Technology should stay human",
+      "kind": "statement",
+      "status": "Believing",
+      "quotes": [{ "text": "I believe technology should strengthen meaningful human interactions rather than replace them.", "source": "From my About page" }],
+      "related": [{ "world": "greenhouse", "path": "philosophy/technology", "label": "In my teaching philosophy" }]
+    },
+    {
+      "id": "trust-children",
+      "constellation": "believe",
+      "title": "Trust in children",
+      "kind": "statement",
+      "status": "Believing",
+      "related": [{ "world": "greenhouse", "path": "philosophy/trust", "label": "Trust, and curiosity, in the Greenhouse" }]
+    },
+    {
+      "id": "try-new-things",
+      "constellation": "believe",
+      "title": "Trying things I don’t yet know how to do",
+      "kind": "statement",
+      "status": "Believing",
+      "quotes": [{ "text": "Away from screens, I draw, paint, collaborate on children’s literature, travel, and try things I don’t yet know how to do.", "source": "From my About page" }],
+      "related": [{ "world": "sketchbook", "path": "", "label": "The Sketchbook" }]
+    },
+    { "id": "belief-unwritten", "constellation": "believe", "title": "A belief, still being put into words", "kind": "statement", "status": "Forming", "placeholder": true },
+
+    {
+      "id": "working-towards",
+      "constellation": "future",
+      "title": "A more curious, compassionate, and creative world",
+      "kind": "goal",
+      "status": "Working towards",
+      "quotes": [{ "text": "What I’m working towards: a more curious, compassionate, and creative world.", "source": "From my About page" }]
+    },
+    {
+      "id": "building-rootmap",
+      "constellation": "future",
+      "title": "RootMap",
+      "kind": "goal",
+      "status": "Building now",
+      "body": "A calm, Montessori-inspired companion for parents of young children: my current focus.",
+      "related": [{ "world": "workshop", "path": "rootmap", "label": "RootMap, in the Workshop" }]
+    },
+    {
+      "id": "becoming-teacher",
+      "constellation": "future",
+      "title": "Becoming a Montessori teacher",
+      "kind": "goal",
+      "status": "In progress",
+      "body": "My AMS Early Childhood teacher training runs until 2027.",
+      "related": [{ "world": "greenhouse", "path": "montessori/teacher-training", "label": "The training, in the Greenhouse" }]
+    },
+    { "id": "future-dream", "constellation": "future", "title": "A dream for the future", "kind": "goal", "status": "Dream", "placeholder": true },
+
+    {
+      "id": "q-control",
+      "constellation": "questions",
+      "title": "What needs my control, and what can belong to the child?",
+      "kind": "question",
+      "status": "Carrying",
+      "quotes": [{ "text": "I need more experience to understand what requires my control and what I can allow the child to control.", "source": "From a reflection written during my Montessori teacher training" }]
+    },
+    {
+      "id": "q-step-in",
+      "constellation": "questions",
+      "title": "When should I step in, and when should I step back?",
+      "kind": "question",
+      "status": "Carrying",
+      "related": [{ "world": "greenhouse", "path": "philosophy/step-in", "label": "In my teaching philosophy" }]
+    },
+    {
+      "id": "q-interest",
+      "constellation": "questions",
+      "title": "Why doesn’t first interest always become lasting use?",
+      "kind": "question",
+      "status": "Carrying",
+      "body": "Something I found while testing tools for parents: initial interest did not always translate into repeat use or practical value.",
+      "related": [{ "world": "workshop", "path": "parent-prototypes", "label": "The parent-support prototypes" }]
+    }
+  ]
+}
